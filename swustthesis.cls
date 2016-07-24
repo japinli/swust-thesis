@@ -12,27 +12,32 @@
 \DeclareBoolOption[false]{openany}
 \DeclareComplementaryOption{twoside}{oneside}
 \DeclareComplementaryOption{openright}{openany}
-\DeclareDefaultOption{\PassOptionToClass{\CurrentOption}{ctexbook}}
+\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 
 \ProcessKeyvalOptions{swust@opt}
-
-\ifswust@page@oneside
-	\PassOptionToClass{oneside}{ctexbook}
-\fi
-
-\ifswust@page@openany
-	\PassOptionToClass{openany}{ctexbook}
-\fi
 
 % TODO: Add English thesis name.
 \ifswust@opt@bachelor
 	\newcommand{\swust@thesis@name}{西南科技大学博士论文}
+        \swust@opt@bachelortrue
 \else
 	\ifswust@opt@master
 		\newcommand{\swust@thesis@name}{西南科技大学硕士论文}
+        	\let\swust@opt@master\true
+                \swust@opt@mastertrue
         \else
-                \newcommand{\swust@thesis@name}{西南科技大学学士论文}
+        	\newcommand{\swust@thesis@name}{西南科技大学本科生毕业论文}
+                \swust@opt@doctortrue
+                \swust@page@onesidetrue
         \fi
+\fi
+
+\ifswust@page@openany
+	\PassOptionsToClass{openany}{ctexbook}
+\fi
+
+\ifswust@page@oneside
+	\PassOptionsToClass{oneside}{ctexbook}
 \fi
 
 \LoadClass[a4paper, UTF8, zihao=-4]{ctexbook}
@@ -53,6 +58,8 @@
 \setsansfont{Arial}
 \setmonofont{Courier New}
 
+\newCJKfontfamily{\hwxk}{STXingkai}
+
 \RequirePackage{hyperref}
 \hypersetup{
   CJKbookmarks=true,
@@ -67,42 +74,70 @@
 }
 
 \RequirePackage{geometry}
-\geometry{
-  paper=a4paper,
-  paperwidth=21.0cm,paperheight=29.7cm,
-  top=3.0cm,bottom=2.5cm,
-  left=2.6cm,right=2.6cm,
-  bindingoffset=0.0cm,
-  headheight=2.0cm,footskip=0.75cm,
-}
+\ifswust@opt@doctor
+	\geometry{
+	  paper=a4paper,
+          top=3.0cm,bottom=3.0cm,
+          left=3.0cm,right=2.5cm,
+          headheight=2.0cm,footskip=1.0cm,
+	}
+\else
+	\geometry{
+	  paper=a4paper,
+          paperwidth=21.0cm,paperheight=29.7cm,
+          top=3.0cm,bottom=2.5cm,
+          left=2.6cm,right=2.6cm,
+          bindingoffset=0.0cm,
+          headheight=2.0cm,footskip=0.75cm,
+        }
+\fi
+
 
 \RequirePackage[pagestyles]{titlesec}
 
 \newcommand{\swust@header}{\swust@thesis@name}
 \newcommand{\swust@header@size}{\zihao{5}}
+\ifswust@opt@doctor
+	\newcommand{\swust@header@font}{\hwxk}
+\else
+        \newcommand{\swust@header@font}{\songti}
+\fi
 
-\newpagestyle{front}[\swust@header@size]{
-  \sethead[][\swust@header][]{}{\chaptertitle}{}
-  \setfoot[\thepage][][]{}{}{\thepage}
-
-  \renewcommand{\makeheadrule}{
-    \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
-    \rule[-.4\baselineskip]{\linewidth}{.5pt}
-  }
-
-  \setfootrule{.5pt}
+\newpagestyle{front}[\swust@header@size\swust@header@font]{
+  \ifswust@opt@doctor
+  	\sethead{}{\swust@header}{\thepage}
+  	\renewcommand{\makeheadrule}{
+  	  \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
+  	  \rule[-.5\baselineskip]{\linewidth}{2pt}
+  	}
+  \else
+        \sethead[][\swust@header][]{}{\chaptertitle}{}
+        \setfoot[\thepage][][]{}{}{\thepage}
+  	\renewcommand{\makeheadrule}{
+  	  \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
+  	  \rule[-.4\baselineskip]{\linewidth}{.5pt}
+  	}        
+        \setfootrule{.5pt}
+  \fi
 }
 
-\newpagestyle{main}[\swust@header@size]{
-  \sethead[][\swust@header][]{}{\chaptertitle}{}
-  \setfoot[\thepage][][]{}{}{\thepage}
-
-  \renewcommand{\makeheadrule}{
-    \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
-    \rule[-.4\baselineskip]{\linewidth}{.5pt}
-  }
-
-  \setfootrule{.5pt}
+\newpagestyle{main}[\swust@header@size\swust@header@font]{
+  \ifswust@opt@doctor  	
+  	\sethead{}{\swust@header}{}
+  	\setfoot{}{\thepage}{}
+  	\renewcommand{\makeheadrule}{
+  	  \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
+  	  \rule[-.5\baselineskip]{\linewidth}{2pt}
+  	}
+  \else  	
+        \sethead[][\swust@header][]{}{\chaptertitle}{}
+        \setfoot[\thepage][][]{}{}{\thepage}
+        \renewcommand{\makeheadrule}{
+  	  \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
+  	  \rule[-.4\baselineskip]{\linewidth}{.5pt}
+  	}
+        \setfootrule{.5pt}
+  \fi
 }
 
 \renewcommand{\frontmatter}{
