@@ -23,7 +23,6 @@
 \else
 	\ifswust@opt@master
 		\newcommand{\swust@thesis@name}{西南科技大学硕士论文}
-        	\let\swust@opt@master\true
                 \swust@opt@mastertrue
         \else
         	\newcommand{\swust@thesis@name}{西南科技大学本科生毕业论文}
@@ -160,6 +159,32 @@
   \@afterindenttrue
   \secdef\@chapter\@schapter
 }
+\ifswust@opt@doctor
+\ctexset{
+  chapter       = {
+    name        = {第,章},
+    number      = \thechapter,
+    format      = \centering\zihao{-2}\heiti,
+    beforeskip  = 2ex,
+    afterskip   = 1ex,
+  },
+  section       = {
+    format      = \raggedright\zihao{4}\heiti,
+    beforeskip  = 1ex,
+    afterskip   = .5ex,
+  },
+  subsection    = {
+    format      = \raggedright\zihao{-4}\songti,
+    beforeskip  = .5ex,
+    afterskip   = 0ex,
+  },
+  subsubsection = {
+    format      = \raggedright\zihao{-4}\songti,
+    beforeskip  = 0ex,
+    afterskip   = 0ex,
+  },
+}
+\else
 
 \ctexset{
   chapter       = {
@@ -185,3 +210,4 @@
     afterskip   = 0ex,
   },
 }
+\fi
