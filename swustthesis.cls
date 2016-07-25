@@ -52,6 +52,9 @@
 \swust@define@term{author}
 \swust@define@term{date}
 \swust@define@term{studentid}
+\swust@define@term{department}
+\swust@define@term{major}
+\swust@define@term{advisor}
 
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
@@ -222,27 +225,62 @@
 
 \renewcommand{\maketitle}{
   \newgeometry{
-    top=3.8cm,bottom=3.8cm,
-    left=3.2cm,right=3.2cm,
-    headheight=0cm,headsep=.8cm,
-    footskip=.8cm,
+    top=3cm,bottom=3cm,
+    left=3cm,right=2.5cm,
+    headheight=2cm, footskip=.5cm,
   }
   \pagestyle{empty}
   \pdfbookmark[-1]{\swust@title}{title}
   \swust@maketitle
+  \restoregeometry
+  \pagestyle{main}
 }
 
-\newcommand{\swust@maketitle}{
-  \begin{titlepage}
-    \centering
-    \zihao{-2}\textbf{\swust@thesis@name}
-    \vskip 3cm
-    \heiti\zihao{2}\swust@title
-    \vskip 4cm
-    \songti\zihao{3}\swust@author
-    \vskip 0pt
-    \swust@studentid
-    \vskip 8cm
-    \zihao{-4}\swust@date
-  \end{titlepage}
-}
+\ifswust@opt@doctor
+	\newcommand{\swust@maketitle}{
+	  \begin{titlepage}
+
+            \begin{minipage}{3cm}
+                \includegraphics[width=3cm]{figures/swust_logo_fig}
+            \end{minipage}
+            \begin{minipage}{4cm}
+              \begin{tabular}{c}
+                \includegraphics[width=9cm]{figures/swust_logo_text}\\
+                \zihao{3}Southwest university of science and technology\\
+              \end{tabular}
+            \end{minipage}
+            
+	    \centering            
+            \vskip 2cm
+	    \heiti\zihao{-0}本科毕业设计（论文）
+	    \vskip 3cm
+	    \zihao{2}\swust@title
+	    \vskip 3cm
+	    \zihao{-3}
+	    \begin{tabular}{cc}
+	      \makebox[4em][s]{学院名称} & \uline{\makebox[16em]{\swust@department}} \\
+	      \makebox[4em][s]{专业名称} & \uline{\makebox[16em]{\swust@major}} \\
+	      \makebox[4em][s]{学生姓名} & \uline{\makebox[16em]{\swust@author}} \\
+	      \makebox[4em][s]{学号}     & \uline{\makebox[16em]{\swust@studentid}} \\
+	      \makebox[4em][s]{指导教师} & \uline{\makebox[16em]{\swust@advisor}} \\
+	    \end{tabular}
+	    \vskip 4cm
+	    \swust@date
+	  \end{titlepage}
+	}
+\else
+	\newcommand{\swust@maketitle}{
+	  \begin{titlepage}
+	    \centering
+	    \zihao{-2}\textbf{\swust@thesis@name}
+	    \vskip 3cm
+	    \heiti\zihao{2}\swust@title
+	    \vskip 4cm
+	    \songti\zihao{3}\swust@author
+	    \vskip 0pt
+	    \swust@studentid
+	    \vskip 8cm
+	    \zihao{-4}\swust@date
+	  \end{titlepage}
+	}
+\fi
