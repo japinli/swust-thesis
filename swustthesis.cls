@@ -211,3 +211,11 @@
   },
 }
 \fi
+
+\newcommand{\swust@pdf@contentsname}{目录}
+\let\swust@save@tableofcontents=\tableofcontents
+\renewcommand{\tableofcontents}{
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \pdfbookmark[0]{\swust@pdf@contentsname}{swusttoc}
+  \swust@save@tableofcontents
+}
