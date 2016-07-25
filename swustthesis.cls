@@ -219,3 +219,30 @@
   \pdfbookmark[0]{\swust@pdf@contentsname}{swusttoc}
   \swust@save@tableofcontents
 }
+
+\renewcommand{\maketitle}{
+  \newgeometry{
+    top=3.8cm,bottom=3.8cm,
+    left=3.2cm,right=3.2cm,
+    headheight=0cm,headsep=.8cm,
+    footskip=.8cm,
+  }
+  \pagestyle{empty}
+  \pdfbookmark[-1]{\swust@title}{title}
+  \swust@maketitle
+}
+
+\newcommand{\swust@maketitle}{
+  \begin{titlepage}
+    \centering
+    \zihao{-2}\textbf{\swust@thesis@name}
+    \vskip 3cm
+    \heiti\zihao{2}\swust@title
+    \vskip 4cm
+    \songti\zihao{3}\swust@author
+    \vskip 0pt
+    \swust@studentid
+    \vskip 8cm
+    \zihao{-4}\swust@date
+  \end{titlepage}
+}
