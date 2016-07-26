@@ -225,6 +225,8 @@
 
 \RequirePackage{titletoc}
 \newcommand{\swust@toc@leaders}{\titlerule*[.5pc]{$\cdot$}}
+% The format of TOC will be different between doctor and master/bachelor.
+% So we can modify the format at here.
 \ifswust@opt@doctor
 	\newcommand{\swust@chap@font}{\heiti}
 	\newcommand{\swust@chap@size}{\zihao{-4}}
@@ -232,6 +234,9 @@
 	\newcommand{\swust@sect@size}{\zihao{-4}}
 	\newcommand{\swust@subs@font}{\songti}
 	\newcommand{\swust@subs@size}{\zihao{-4}}
+        \newcommand{\swust@chap@toc@indent}{0bp}
+        \newcommand{\swust@sect@toc@indent}{2\ccwd}
+        \newcommand{\swust@subs@toc@indent}{4\ccwd}
 \else
 	\newcommand{\swust@chap@font}{\heiti}
 	\newcommand{\swust@chap@size}{\zihao{-4}}
@@ -239,20 +244,23 @@
 	\newcommand{\swust@sect@size}{\zihao{-4}}
 	\newcommand{\swust@subs@font}{\songti}
 	\newcommand{\swust@subs@size}{\zihao{-4}}
+        \newcommand{\swust@chap@toc@indent}{0bp}
+        \newcommand{\swust@sect@toc@indent}{2\ccwd}
+        \newcommand{\swust@subs@toc@indent}{4\ccwd}
 \fi
         
 \titlecontents{chapter}
-              [0bp]
+              [\swust@chap@toc@indent]
               {\swust@chap@size\swust@chap@font}
               {\thecontentslabel\hspace*{.5em}}
               {}{\swust@toc@leaders\contentspage}
 \titlecontents{section}
-              [2\ccwd]
+              [\swust@sect@toc@indent]
               {\swust@sect@size\swust@sect@font}
               {\thecontentslabel\hspace*{.5em}}
               {}{\swust@toc@leaders\contentspage}
 \titlecontents{subsection}
-              [0bp]
+              [\swust@subs@toc@indent]
               {\swust@subs@size\swust@subs@font}
               {\thecontentslabel\hspace*{.5em}}
               {}{\swust@toc@leaders\contentspage}
