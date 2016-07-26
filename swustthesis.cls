@@ -223,6 +223,41 @@
   \swust@save@tableofcontents
 }
 
+\RequirePackage{titletoc}
+\newcommand{\swust@toc@leaders}{\titlerule*[.5pc]{$\cdot$}}
+\ifswust@opt@doctor
+	\newcommand{\swust@chap@font}{\heiti}
+	\newcommand{\swust@chap@size}{\zihao{-4}}
+	\newcommand{\swust@sect@font}{\songti}
+	\newcommand{\swust@sect@size}{\zihao{-4}}
+	\newcommand{\swust@subs@font}{\songti}
+	\newcommand{\swust@subs@size}{\zihao{-4}}
+\else
+	\newcommand{\swust@chap@font}{\heiti}
+	\newcommand{\swust@chap@size}{\zihao{-4}}
+	\newcommand{\swust@sect@font}{\songti}
+	\newcommand{\swust@sect@size}{\zihao{-4}}
+	\newcommand{\swust@subs@font}{\songti}
+	\newcommand{\swust@subs@size}{\zihao{-4}}
+\fi
+        
+\titlecontents{chapter}
+              [0bp]
+              {\swust@chap@size\swust@chap@font}
+              {\thecontentslabel\hspace*{.5em}}
+              {}{\swust@toc@leaders\contentspage}
+\titlecontents{section}
+              [2\ccwd]
+              {\swust@sect@size\swust@sect@font}
+              {\thecontentslabel\hspace*{.5em}}
+              {}{\swust@toc@leaders\contentspage}
+\titlecontents{subsection}
+              [0bp]
+              {\swust@subs@size\swust@subs@font}
+              {\thecontentslabel\hspace*{.5em}}
+              {}{\swust@toc@leaders\contentspage}
+        
+
 \renewcommand{\maketitle}{
   \newgeometry{
     top=3cm,bottom=3cm,
