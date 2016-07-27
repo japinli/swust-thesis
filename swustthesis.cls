@@ -281,8 +281,9 @@
 
 \ifswust@opt@doctor
 	\newcommand{\swust@maketitle}{
-	  \begin{titlepage}
-
+	  
+          \begin{titlepage}
+            \vspace*{1cm}
             \begin{minipage}{3cm}
                 \includegraphics[width=3cm]{figures/swust_logo_fig}
             \end{minipage}
@@ -293,12 +294,12 @@
               \end{tabular}
             \end{minipage}
             
-	    \centering            
-            \vskip 2cm
-	    \heiti\zihao{-0}本科毕业设计（论文）
-	    \vskip 3cm
-	    \zihao{2}\swust@title
-	    \vskip 3cm
+            \centering
+            \vspace{2cm}
+	    \heiti\zihao{-0}本科毕业设计（论文）\\
+	    \vspace{3cm}
+	    \zihao{2}\swust@title\\
+            \vspace{3cm}
 	    \zihao{-3}
 	    \begin{tabular}{cc}
 	      \makebox[4em][s]{学院名称} & \uline{\makebox[16em]{\swust@department}} \\
@@ -306,23 +307,24 @@
 	      \makebox[4em][s]{学生姓名} & \uline{\makebox[16em]{\swust@author}} \\
 	      \makebox[4em][s]{学号}     & \uline{\makebox[16em]{\swust@studentid}} \\
 	      \makebox[4em][s]{指导教师} & \uline{\makebox[16em]{\swust@advisor}} \\
-	    \end{tabular}
-	    \vskip 4cm
-	    \swust@date
+	    \end{tabular}\\            
+	    \vspace{3cm}
+            \swust@date
 	  \end{titlepage}
 	}
 \else
 	\newcommand{\swust@maketitle}{
 	  \begin{titlepage}
+            \vspace*{3cm}
 	    \centering
 	    \zihao{-2}\textbf{\swust@thesis@name}
 	    \vskip 3cm
 	    \heiti\zihao{2}\swust@title
 	    \vskip 4cm
 	    \songti\zihao{3}\swust@author
-	    \vskip 0pt
+	    \vskip 0cm
 	    \swust@studentid
-	    \vskip 8cm
+	    \vskip 7cm
 	    \zihao{-4}\swust@date
 	  \end{titlepage}
 	}
@@ -340,9 +342,11 @@
 	  \songti
 	}
 	
-	\newcommand{\keywords}[1]{
+	\newcommand{\keywords}[2][\zihao{-4}]{
 	  \par\phantom{关键词}\par\noindent
-	  \textbf{关键词: }#1
+          {
+	    #1{\heiti 关键词: }#2
+          }
 	}
 	
 	\newenvironment{englishabstract}{
@@ -356,10 +360,36 @@
 	  \noindent\zihao{-4}\textbf{Abstract :}
 	}
 	
-	\newcommand{\englishkeywords}[1]{
+	\newcommand{\englishkeywords}[2][\zihao{-4}]{
 	  \par\phantom{keywords}\par\noindent
-	  \textbf{Key words: }#1
+          {
+	    #1\textbf{Key words: }#2
+          }
 	}
 \else
-
+	\newenvironment{abstract}{
+	  \chapter[摘要]{摘\quad 要}
+	}
+	
+	\newcommand{\keywords}[2][\zihao{5}]{
+	  \par\phantom{关键词}\par\noindent
+	  {
+	    #1\textbf{关键词：}#2
+	  }
+	}
+	
+	\newenvironment{englishabstract}{
+	  \chapter[Abstract]{ABSTRACT}
+	  \setlength{\parskip}{2ex}
+	  \setlength{\parindent}{0pt}
+	}
+	
+	\newcommand{\englishkeywords}[2][\zihao{5}]{
+	  \par\phantom{keywords}\par\noindent
+	  {
+	    #1\textbf{KEY WORDS: }#2
+	  }
+	}
 \fi
+
+\renewcommand{\contentsname}{目\qquad 录}
