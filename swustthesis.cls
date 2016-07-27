@@ -55,6 +55,7 @@
 \swust@define@term{department}
 \swust@define@term{major}
 \swust@define@term{advisor}
+\swust@define@term{englishtitle}
 
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
@@ -276,7 +277,6 @@
   \pdfbookmark[-1]{\swust@title}{title}
   \swust@maketitle
   \restoregeometry
-  \pagestyle{main}
 }
 
 \ifswust@opt@doctor
@@ -326,4 +326,40 @@
 	    \zihao{-4}\swust@date
 	  \end{titlepage}
 	}
+\fi
+
+\ifswust@opt@doctor
+	\newenvironment{abstract}{
+	  \begin{center}
+	    \vspace*{2ex}
+	    \zihao{-1}\heiti\swust@title
+	    \vspace{1ex}
+	  \end{center}
+	  
+	  \noindent\zihao{-4}\heiti 摘要:
+	  \songti
+	}
+	
+	\newcommand{\keywords}[1]{
+	  \par\phantom{关键词}\par\noindent
+	  \textbf{关键词: }#1
+	}
+	
+	\newenvironment{englishabstract}{
+	  \newpage
+	  \begin{center}
+	    \vspace*{2ex}
+	    \zihao{-2}\textbf{\swust@englishtitle}
+	    \vspace{1ex}
+	  \end{center}
+	
+	  \noindent\zihao{-4}\textbf{Abstract :}
+	}
+	
+	\newcommand{\englishkeywords}[1]{
+	  \par\phantom{keywords}\par\noindent
+	  \textbf{Key words: }#1
+	}
+\else
+
 \fi
