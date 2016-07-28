@@ -274,7 +274,7 @@
     headheight=2cm, footskip=.5cm,
   }
   \pagestyle{empty}
-  \pdfbookmark[-1]{\swust@title}{title}
+  \pdfbookmark[0]{封面}{titlepage}
   \swust@maketitle
   \restoregeometry
 }
