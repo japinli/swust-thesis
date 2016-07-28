@@ -334,12 +334,14 @@
 	\newenvironment{abstract}{
 	  \begin{center}
 	    \vspace*{2ex}
+            \pdfbookmark[0]{摘要}{abstract}
 	    \zihao{-1}\heiti\swust@title
 	    \vspace{1ex}
 	  \end{center}
-	  
-	  \noindent\zihao{-4}\heiti 摘要:
-	  \songti
+
+          {
+	    \noindent\zihao{-4}\heiti 摘要:
+          }
 	}
 	
 	\newcommand{\keywords}[2][\zihao{-4}]{
@@ -353,6 +355,7 @@
 	  \newpage
 	  \begin{center}
 	    \vspace*{2ex}
+            \pdfbookmark[0]{Abstract}{englishabstract}
 	    \zihao{-2}\textbf{\swust@englishtitle}
 	    \vspace{1ex}
 	  \end{center}
