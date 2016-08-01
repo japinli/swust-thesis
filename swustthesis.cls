@@ -396,3 +396,23 @@
 \fi
 
 \renewcommand{\contentsname}{目\qquad 录}
+
+\RequirePackage{amsmath}
+\RequirePackage{caption}
+\RequirePackage{longtable}
+\numberwithin{table}{chapter}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+
+\DeclareCaptionLabelSeparator{zhspace}{\hspace{\ccwd}}
+\DeclareCaptionFont{capfont}{\zihao{5}}
+\newcommand{\contableformat}{\zihao{5}}
+\captionsetup{
+  font = {capfont,bf},
+  labelsep = quad,
+}
+
+\captionsetup[table]{
+  position = top,
+  aboveskip = 6bp,
+  belowskip = 6bp,
+}
