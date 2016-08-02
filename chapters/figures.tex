@@ -1,0 +1,31 @@
+\chapter{图片设置}
+
+本章包含\LaTeX\ 中基本的图片设置功能，包含指定图片的长宽，缩放大小等。
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics{swust_logo_text}
+  \caption{西南科技大学}
+\end{figure}
+西南科技大学文本图片如\thefigure 所示。
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=5in,height=2in]{swust_logo_text}
+  \caption{指定长宽的图片}
+\end{figure}
+
+图\thefigure 展示了图片的长宽设置。通过在~\textbackslash
+includegraphics~中指定可选的~width,height~值指定长宽。
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=2]{swust_logo_fig}
+  \caption{缩放演示}
+\end{figure}
+
+图\thefigure 展示了图片的缩放设置。通过在~\textbackslash
+includegraphics~中指定可选的~scale~值缩放大小。
+
+注意：在使用~\textbackslash thefigure~标号表示图片编号时，需要在图片后面立即使用。
+若插入多张图片之后在使用，编号会是最后一张图片的编号。

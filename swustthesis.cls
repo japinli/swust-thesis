@@ -416,3 +416,7 @@
   aboveskip = 6bp,
   belowskip = 6bp,
 }
+
+\graphicspath{{figures/}{./}}
+\numberwithin{figure}{chapter}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
