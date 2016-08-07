@@ -91,7 +91,7 @@
           top=3.0cm,bottom=2.5cm,
           left=2.6cm,right=2.6cm,
           bindingoffset=0.0cm,
-          headheight=2.0cm,footskip=0.75cm,
+          headheight=2.0cm,footskip=1.25cm,
         }
 \fi
 
@@ -399,16 +399,14 @@
 
 \RequirePackage{amsmath}
 \RequirePackage{caption}
-\RequirePackage{longtable}
-\numberwithin{table}{chapter}
-\renewcommand{\thetable}{\thechapter-\arabic{table}}
 
-\DeclareCaptionLabelSeparator{zhspace}{\hspace{\ccwd}}
-\DeclareCaptionFont{capfont}{\zihao{5}}
+\DeclareCaptionLabelSeparator{captionlabelsep}{\hspace{\ccwd}}
+\DeclareCaptionFont{captionfont}{\zihao{5}}
 \newcommand{\contableformat}{\zihao{5}}
+
 \captionsetup{
-  font = {capfont,bf},
-  labelsep = quad,
+  font = {captionfont,bf},
+  labelsep = captionlabelsep,
 }
 
 \captionsetup[table]{
@@ -416,6 +414,16 @@
   aboveskip = 6bp,
   belowskip = 6bp,
 }
+
+\captionsetup[figure]{
+  position = bottom,
+  aboveskip = 6bp,
+  belowskip = 6bp,
+}
+
+\numberwithin{table}{chapter}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
+\RequirePackage{longtable}
 
 \graphicspath{{figures/}{./}}
 \numberwithin{figure}{chapter}
