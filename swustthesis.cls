@@ -19,10 +19,12 @@
 % TODO: Add English thesis name.
 \ifswust@opt@bachelor
 	\newcommand{\swust@thesis@name}{西南科技大学博士论文}
+        \newcommand{\swust@thesis@english@name}{A Dissertation Submitted to Southwest University of Science and Technology for the Degree of Master}
         \swust@opt@bachelortrue
 \else
 	\ifswust@opt@master
 		\newcommand{\swust@thesis@name}{西南科技大学硕士论文}
+                \newcommand{\swust@thesis@english@name}{A Thesis Submitted to Southwest University of Science and Technology for the Degree of Master}
                 \swust@opt@mastertrue
         \else
         	\newcommand{\swust@thesis@name}{西南科技大学本科生毕业论文}
@@ -49,14 +51,18 @@
 }
 
 \swust@define@term{title}                 % 标题
+\swust@define@term{englishtitle}          % 英文题目
+\swust@define@term{degreetype}            % 学位类型
+\swust@define@term{englishdegreetype}     % 英文学位类型
 \swust@define@term{author}                % 作者
+\swust@define@term{candidate}             % 作者英文名
+\swust@define@term{advisor}               % 指导教师
+\swust@define@term{supervisor}            % 指导教师英文名
 \swust@define@term{date}                  % 日期
+\swust@define@term{englishdate}           % 英文日期
 \swust@define@term{studentid}             % 学号
 \swust@define@term{department}            % 学院
 \swust@define@term{major}                 % 专业
-\swust@define@term{advisor}               % 指导教师
-\swust@define@term{englishtitle}          % 英文题目
-\swust@define@term{degreetype}            % 学位类型
 \swust@define@term{classified}            % 分类号
 \swust@define@term{UDC}                   % UDC
 \swust@define@term{secrettext}            % 密级
@@ -285,7 +291,7 @@
 
 \newcommand{\chinesetitlepage}{
   \begin{titlepage}
-    \vspace*{2cm}
+    \vspace*{1cm}
     \centering
     \songti\zihao{4}
     \begin{tabular}{rp{7cm}rl}
@@ -313,7 +319,22 @@
 
 \newcommand{\englishtitlepage}{
   \begin{titlepage}
-    英文题目页
+    \vspace*{1cm}
+    \centering
+    \zihao{3}\swust@thesis@english@name
+    \vskip .5cm
+    \zihao{-4}\swust@englishdegreetype
+    \vskip 2cm
+    \zihao{-2}\swust@englishtitle
+    \vskip 5cm
+    \zihao{-3}
+    \begin{tabular}{rl}
+      Candidate: &  \swust@candidate \\
+      Supervisor: & \swust@supervisor \\
+    \end{tabular}
+    \vskip 6cm
+    \zihao{-4}
+    \swust@englishdate    
   \end{titlepage}
 }
 
