@@ -5,3 +5,5 @@
 *.blg
 *.toc
 main.pdf
+*.fdb_latexmk
+*.fls
