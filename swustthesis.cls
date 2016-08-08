@@ -48,14 +48,18 @@
   \csname #1\endcsname{}
 }
 
-\swust@define@term{title}
-\swust@define@term{author}
-\swust@define@term{date}
-\swust@define@term{studentid}
-\swust@define@term{department}
-\swust@define@term{major}
-\swust@define@term{advisor}
-\swust@define@term{englishtitle}
+\swust@define@term{title}                 % 标题
+\swust@define@term{author}                % 作者
+\swust@define@term{date}                  % 日期
+\swust@define@term{studentid}             % 学号
+\swust@define@term{department}            % 学院
+\swust@define@term{major}                 % 专业
+\swust@define@term{advisor}               % 指导教师
+\swust@define@term{englishtitle}          % 英文题目
+\swust@define@term{degreetype}            % 学位类型
+\swust@define@term{classified}            % 分类号
+\swust@define@term{UDC}                   % UDC
+\swust@define@term{secrettext}            % 密级
 
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
@@ -279,9 +283,42 @@
   \restoregeometry
 }
 
+\newcommand{\chinesetitlepage}{
+  \begin{titlepage}
+    \vspace*{2cm}
+    \centering
+    \songti\zihao{4}
+    \begin{tabular}{rp{7cm}rl}
+      分类号： & \swust@classified & 学校代码：& 10619 \\
+         UDC： & \swust@UDC        &     密级：& \swust@secrettext \\
+    \end{tabular}
+    \vskip 2cm
+    \zihao{-2}\textbf{\swust@thesis@name}
+    \vskip .5cm
+    \zihao{4}\songti\swust@degreetype
+    \vskip 2cm
+    \zihao{2}\heiti\swust@title
+    \vskip 2cm
+    \zihao{3}\songti\swust@author
+    \vskip 4cm
+    \zihao{4}\songti
+    \begin{tabular}{rc}
+      \makebox[12em][s]{指导教师姓名、职称：}     & \swust@advisor \\
+      \makebox[12em][s]{学科（专业）或领域名称：} & \swust@major \\
+      \makebox[12em][s]{学生所属学院：}           & \swust@department\\
+      \makebox[12em][s]{论文答辩日期：}           & \swust@date \\
+    \end{tabular}
+  \end{titlepage}
+}
+
+\newcommand{\englishtitlepage}{
+  \begin{titlepage}
+    英文题目页
+  \end{titlepage}
+}
+
 \ifswust@opt@doctor
-	\newcommand{\swust@maketitle}{
-	  
+	\newcommand{\swust@maketitle}{	  
           \begin{titlepage}
             \vspace*{1cm}
             \begin{minipage}{3cm}
@@ -315,9 +352,11 @@
 \else
 	\newcommand{\swust@maketitle}{
 	  \begin{titlepage}
-            \vspace*{3cm}
+            \vspace*{2cm}
 	    \centering
 	    \zihao{-2}\textbf{\swust@thesis@name}
+            \vskip .5cm
+            \songti\zihao{-4}\swust@degreetype
 	    \vskip 3cm
 	    \heiti\zihao{2}\swust@title
 	    \vskip 4cm
@@ -327,6 +366,8 @@
 	    \vskip 7cm
 	    \zihao{-4}\swust@date
 	  \end{titlepage}
+          \chinesetitlepage\cleardoublepage
+          \englishtitlepage\cleardoublepage
 	}
 \fi
 
