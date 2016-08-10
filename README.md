@@ -17,9 +17,9 @@ swustthesis 获取
 ----------------
 
 1. 克隆代码
-```
-git clone https://github.com/japinl/swust-thesis.git
-```
+   ```
+   git clone https://github.com/japinl/swust-thesis.git
+   ```
 2. 点击`Clone or download`选择`Download ZIP`下载并解压。
 
 进入`swustthesis`目录，在命令提示符或终端中使用`latexmk`编译文档，查看
@@ -29,6 +29,7 @@ swustthesis 说明
 ----------------
 
 **swustthesis**类包含三种论文模板可通过如下选项设置。
+
 | 选项     | 说明                      |
 |:--------:|---------------------------|
 | doctor   | 学士（本科）论文（默认）  |
@@ -36,12 +37,14 @@ swustthesis 说明
 | bachelor | 博士论文                  |
 
 此外还可以通过设置打印选项。
+
 | 选项    | 说明            |
 |---------|-----------------|
 | oneside | 单面打印        |
 | twoside | 双面打印（默认）|
 
 例如，编写硕士论文并要单面打印可以按如下方式加载`swustthesis`类。
+
 ```
 \documentclass[oneside, master]{swustthesis}
 ```
