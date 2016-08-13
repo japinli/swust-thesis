@@ -275,7 +275,49 @@
               {\swust@subs@size\swust@subs@font}
               {\thecontentslabel\hspace*{.5em}}
               {}{\swust@toc@leaders\contentspage}
-        
+
+\newcommand{\swust@declare@text}{
+  本人郑重声明：所呈交的学位论文是我个人在导师的指导下进行的研究工作及
+  取得的研究成果。尽我所知，除了文中特别加以标注和致谢的地方外，论文中
+  不包含其他人已经发表或撰写过的研究成功。与我一同工作的同志对本研究所
+  做的任何贡献均已在论文中坐了明确的说明，并表示了感谢。本人依法享有和
+  承担由此论文所产生的权利和责任。
+}
+
+\newcommand{\swust@warranty@text}{
+  本学位论文作者完全了解学校有关保存、使用学位论文的规定，即：研究生在
+  西南科技大学学习和工作期间论文工作的知识产权单位属于西南科技大学。同
+  意授权西南科技大学保留并向国家有关部门或机构送交该论文的印刷本和电子
+  版本，允许该论文被查阅和借阅。同意授权西南科技大学可以将本学位论文的
+  全部或部分内容编入有关数据库进行检索，可以采用影印、缩印、扫描或数字
+  化等其他复制手段保存和汇编本学位论文。保密论文在解密后遵守此规定。  
+}
+
+\newcommand{\swust@make@statement}{
+  \pdfbookmark[0]{声明}{statement}
+  \vspace*{.5cm}
+  \begin{center}
+    \heiti\zihao{-2}\textbf{学位论文独创性声明}
+  \end{center}
+  \vskip .5cm
+  \par\swust@declare@text
+  \begin{flushright}
+  \vskip .5cm
+  论文作者签名：\makebox[5em]{} 日期：\makebox[3em]{}年\makebox[2em]{}月\makebox[2em]{}日
+  \end{flushright}
+  \vskip .5cm
+  \begin{center}
+    \heiti\zihao{-2}\textbf{学位论文版权使用授权声明}
+  \end{center}
+  \vskip .5cm
+  \par\swust@warranty@text
+  \begin{flushright}
+  \vskip .5cm
+  论文作者签名：\makebox[5em]{} 日期：\makebox[3em]{}年\makebox[2em]{}月\makebox[2em]{}日
+  \vskip .5cm
+  指导教师签名：\makebox[5em]{} 日期：\makebox[3em]{}年\makebox[2em]{}月\makebox[2em]{}日
+  \end{flushright}
+}
 
 \renewcommand{\maketitle}{
   \newgeometry{
@@ -389,6 +431,7 @@
 	  \end{titlepage}
           \chinesetitlepage\cleardoublepage
           \englishtitlepage\cleardoublepage
+          \swust@make@statement\cleardoublepage
 	}
 \fi
 
