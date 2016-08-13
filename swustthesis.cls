@@ -17,10 +17,10 @@
 \ProcessKeyvalOptions{swust@opt}
 
 % TODO: Add English thesis name.
-\ifswust@opt@bachelor
+\ifswust@opt@doctor
 	\newcommand{\swust@thesis@name}{西南科技大学博士论文}
         \newcommand{\swust@thesis@english@name}{A Dissertation Submitted to Southwest University of Science and Technology for the Degree of Master}
-        \swust@opt@bachelortrue
+        \swust@opt@doctortrue
 \else
 	\ifswust@opt@master
 		\newcommand{\swust@thesis@name}{西南科技大学硕士论文}
@@ -28,7 +28,7 @@
                 \swust@opt@mastertrue
         \else
         	\newcommand{\swust@thesis@name}{西南科技大学本科生毕业论文}
-                \swust@opt@doctortrue
+                \swust@opt@bachelortrue
                 \swust@page@onesidetrue
         \fi
 \fi
@@ -110,14 +110,14 @@
 
 \newcommand{\swust@header}{\swust@thesis@name}
 \newcommand{\swust@header@size}{\zihao{5}}
-\ifswust@opt@doctor
+\ifswust@opt@bachelor
 	\newcommand{\swust@header@font}{\hwxk}
 \else
         \newcommand{\swust@header@font}{\songti}
 \fi
 
 \newpagestyle{front}[\swust@header@size\swust@header@font]{
-  \ifswust@opt@doctor
+  \ifswust@opt@bachelor
   	\sethead{}{\swust@header}{\thepage}
   	\renewcommand{\makeheadrule}{
   	  \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
@@ -135,7 +135,7 @@
 }
 
 \newpagestyle{main}[\swust@header@size\swust@header@font]{
-  \ifswust@opt@doctor  	
+  \ifswust@opt@bachelor
   	\sethead{}{\swust@header}{}
   	\setfoot{}{\thepage}{}
   	\renewcommand{\makeheadrule}{
@@ -173,7 +173,7 @@
   \@afterindenttrue
   \secdef\@chapter\@schapter
 }
-\ifswust@opt@doctor
+\ifswust@opt@bachelor
 \ctexset{
   chapter       = {
     name        = {第,章},
@@ -238,7 +238,7 @@
 \newcommand{\swust@toc@leaders}{\titlerule*[.5pc]{$\cdot$}}
 % The format of TOC will be different between doctor and master/bachelor.
 % So we can modify the format at here.
-\ifswust@opt@doctor
+\ifswust@opt@bachelor
 	\newcommand{\swust@chap@font}{\heiti}
 	\newcommand{\swust@chap@size}{\zihao{-4}}
 	\newcommand{\swust@sect@font}{\songti}
@@ -380,7 +380,7 @@
   \end{titlepage}
 }
 
-\ifswust@opt@doctor
+\ifswust@opt@bachelor
 	\newcommand{\swust@maketitle}{	  
           \begin{titlepage}
             \vspace*{1cm}
@@ -435,7 +435,7 @@
 	}
 \fi
 
-\ifswust@opt@doctor
+\ifswust@opt@bachelor
 	\newenvironment{abstract}{
 	  \begin{center}
 	    \vspace*{2ex}

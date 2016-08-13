@@ -61,6 +61,7 @@ swustthesis 说明
 ![本科论文封面](figures/bachelor_titlepage.png)
 
 硕士/博士论文封面如下图所示：
+
 ![硕士/博士论文封面](figures/master_doctor_titlepage.png)
 
 [TeX Live]: http://tug.org/texlive/
