@@ -25,6 +25,10 @@ swustthesis 获取
 进入`swustthesis`目录，在命令提示符或终端中使用`latexmk`编译文档，查看
 `main.pdf`效果，可以使用`latexmk -c`清理生成的中间文件。
 
+备注：由于本科论文中使用了华文行楷，若需要在Linux系统下使用，需要预先
+安装该字体。具体安装方式查看
+[此处](http://blog.csdn.net/Kai_gai/article/details/51281440)。
+
 swustthesis 说明
 ----------------
 
