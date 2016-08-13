@@ -36,9 +36,9 @@ swustthesis 说明
 
 | 选项     | 说明                      |
 |:--------:|---------------------------|
-| doctor   | 学士（本科）论文（默认）  |
+| bachelor | 学士（本科）论文（默认）  |
 | master   | 硕士论文                  |
-| bachelor | 博士论文                  |
+| doctor   | 博士论文                  |
 
 此外还可以通过设置打印选项。
 
@@ -52,6 +52,16 @@ swustthesis 说明
 ```
 \documentclass[oneside, master]{swustthesis}
 ```
+
+展示
+-----
+
+本科论文封面如下图所示：
+
+![本科论文封面](figures/bachelor_titlepage.png)
+
+硕士/博士论文封面如下图所示：
+![硕士/博士论文封面](figures/master_doctor_titlepage.png)
 
 [TeX Live]: http://tug.org/texlive/
 [安装教程]: http://tug.org/texlive/quickinstall.html
