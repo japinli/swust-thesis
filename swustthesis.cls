@@ -533,3 +533,7 @@
 \graphicspath{{figures/}{./}}
 \numberwithin{figure}{chapter}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+
+\newenvironment{publications}{
+  \chapter{攻读学位期间取得的研究成果}
+}{}
