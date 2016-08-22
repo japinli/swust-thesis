@@ -4,6 +4,13 @@
 *.bbl
 *.blg
 *.toc
-main.pdf
+*.pdf
 *.fdb_latexmk
 *.fls
+*.glo
+*.gls
+*.hd
+*.idx
+*.ilg
+*.ind
+*.pdf						

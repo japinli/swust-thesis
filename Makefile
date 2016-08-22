@@ -2,15 +2,16 @@
 
 NAME = swustthesis
 
-main: cls
+all: cls doc main
 
-all: cls doc
+main: main.tex cls
+	latexmk -xelatex $<
 
 cls: $(NAME).cls
 
 doc: $(NAME).pdf
 
-$(NAME).cls: $(NAME).ins
+$(NAME).cls: $(NAME).ins $(NAME).dtx
 	xetex $<
 
 $(NAME).pdf: $(NAME).dtx
