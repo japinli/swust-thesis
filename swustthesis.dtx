@@ -92,6 +92,7 @@
 %
 % \changes{v0.0.1}{2016/06/11}{初始化~swustthesis项目}
 % \changes{v0.0.2}{2016/08/21}{使用~dtx~创建文件类文件}
+% \changes{v0.0.2}{2016/08/22}{添加编译说明文档}
 %
 % \GetFileInfo{swustthesis.dtx}
 %
@@ -145,22 +146,50 @@
 %     使用手册      & swustthesis.pdf  & 模板使用说明 \\
 %                   & READMD.md        & 项目说明文件 \\
 %     \midrule
+%     示例文件      & main.tex         & 论文示例模板  \\
+%                   & figures/         & 图片存放目录  \\
+%                   & chapters/        & 论文章节示例  \\
+%     \midrule
 %     其他          & Makefile         & GUN Makefile 配置文件 \\
 %                   & latexmkrc        & \LaTeX\ 编译配置文件 \\
 %     \bottomrule
 % \end{tabularx}
 % \end{center}
 %
-% 文件~swustthesis.dtx~是模板的原始代码文件，它用于自动生成文档类文
-% 件~swustthesis.cls~和模板使用说明文件~swustthesis.pdf~。原始模板文件仅供
-% 模板开发者使用，一般用户无需使用。
+% 文件~swustthesis.ins~用于生成~swustthesis~类文件，该过程中需要读
+% 取~swustthesis.dtx~文件；文件~swustthesis.dtx~是模板的原始代码文件，
+% 它用于自动生成模板使用说明文件~swustthesis.pdf~。原始模板文件仅供
+% 模板开发者使用，一般用户无需使用。~main.tex~是论文示例模板文件，该文
+% 件通过引入~chapters/~目录下的文件来组织论文结构，~figures~目录则存放
+% 论文中使用到的图片资源。
 %
 % \subsection{编译}
 %
-% 在~Linux~下可通过~make~直接进行编译，由于~Windows~下无法使用~make~，可通过
-% ~latexmk~进行编译。
+% \begin{enumerate}
+% \item make编译：适合~Linux~系统。
 %
-% \section{使用说明}
+% \begin{tabularx}{.8\linewidth}{ll}
+% \toprule
+%  make           & 默认编译所有文件 \\
+%  make doc       & 仅编译~swustthesis.pdf~说明文件 \\
+%  make cls       & 仅编译~swustthesis.cls~文档类文件 \\
+%  make main      & 仅编译~main.pdf~示例文件 \\
+%  make clean     & 清理中间文件  \\
+% \bottomrule
+% \end{tabularx}
+%
+% \item latexmk编译：适合~Windows/Linux~系统。
+%
+% \begin{tabularx}{.8\linewidth}{ll}
+% \toprule
+%  latexmk main             & 编译~main.pdf~示例文件 \\
+%  latexmk swustthesis.dtx  & 编译~swustthesis.pdf~说明文件 \\
+%  latexmk swustthesis.ins  & 编译~swustthesis.cls~文档类文件 \\
+%  latexmk -c               & 清理中间文件  \\
+% \bottomrule
+% \end{tabularx}
+%
+% \end{enumerate}
 %
 % \StopEventually{}
 %
