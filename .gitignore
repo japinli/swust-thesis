@@ -4,7 +4,6 @@
 *.bbl
 *.blg
 *.toc
-*.pdf
 *.fdb_latexmk
 *.fls
 *.glo
@@ -13,4 +12,3 @@
 *.idx
 *.ilg
 *.ind
-*.pdf						
