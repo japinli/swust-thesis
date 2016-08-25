@@ -37,7 +37,7 @@ FUNCTION {output.nonnull}
 
 FUNCTION {output}
 { duplicate$ empty$
-    { skip$ }
+    { pop$ }
     { output.nonnull }
   if$
 }
@@ -99,6 +99,15 @@ FUNCTION {bbl.etal}
 { is.chinese
     { bbl.etal.zh }
     { bbl.etal.en }
+  if$
+}
+
+FUNCTION {bbl.translate.en}         {"~trans"}
+FUNCTION {bbl.translate.zh}         {"译"}
+FUNCTION {bbl.translate}
+{ is.chinese
+    { bbl.translate.zh }
+    { bbl.translate.en }
   if$
 }
 
@@ -188,6 +197,19 @@ FUNCTION {format.full.title}
 
 FUNCTION {format.mark}   { mark add.squarebracket }
 
+FUNCTION {format.translator}
+{ translator empty$
+    { "" }
+    { translator format.names
+      translator num.names$ #3 >
+	{ bbl.translate * }
+	{ bbl.comma * bbl.translate * }
+      if$
+      bbl.period *
+    }
+  if$
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型函数定义
 %%
@@ -200,8 +222,10 @@ FUNCTION {book}
     { format.editors bbl.period * "author and editor" output.check }
     { format.authors bbl.period * output }
   if$
-  "\newblock " format.full.title * "title" output.check
-  "M" set.mark format.mark "mark" output.check
+  newline$ "\newblock "
+  format.full.title * "title" output.check
+  "M" set.mark format.mark "mark" output.check bbl.period output
+  format.translator output
 }
 
 
