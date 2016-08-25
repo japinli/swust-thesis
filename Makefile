@@ -4,7 +4,7 @@ NAME = swustthesis
 
 all: cls doc main
 
-main: main.tex cls
+main: main.tex cls $(NAME).cls $(NAME).bst
 	latexmk -xelatex $<
 
 cls: $(NAME).cls
