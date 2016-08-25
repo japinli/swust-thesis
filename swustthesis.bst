@@ -32,7 +32,7 @@ ENTRY
 STRINGS { s t }
 
 FUNCTION {output.nonnull}
-{ write$ newline$
+{ write$
 }
 
 FUNCTION {output}
@@ -86,9 +86,14 @@ FUNCTION {is.digit}
   if$
 }
 
-FUNCTION {bbl.comma}                {","}
 FUNCTION {bbl.colon}                {":"}
-FUNCTION {bbl.etal.en}              {", et al"}
+FUNCTION {bbl.comma}                {","}
+FUNCTION {bbl.dash}                 {"--"}
+FUNCTION {bbl.double.slash}         {" //"}
+FUNCTION {bbl.period}               {". "}
+FUNCTION {bbl.space}                {" "}
+
+FUNCTION {bbl.etal.en}              {"et al"}
 FUNCTION {bbl.etal.zh}              {"等"}
 FUNCTION {bbl.etal}
 { is.chinese
@@ -97,6 +102,30 @@ FUNCTION {bbl.etal}
   if$
 }
 
+FUNCTION {bbl.volume.en}            {"Vol~"}
+FUNCTION {bbl.volume.zh}            {"卷"}
+FUNCTION {bbl.volume}
+{ is.chinese
+    { bbl.volume.zh }
+    { bbl.volume.en }
+  if$
+}
+
+FUNCTION {add.brace}                { "{" swap$ * "}" *}
+FUNCTION {add.bracket}              { "(" swap$ * ")" *}
+FUNCTION {add.squarebracket}        { "[" swap$ * "]" *}
+
+FUNCTION {set.mark}
+{ 'mark :=
+  is.online
+    { mark "/OL" * 'mark := }
+    { media empty$ { skip$ } { mark "/" * media * 'mark := } if$ }
+  if$
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 格式化信息输出
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 INTEGERS { nameindex namesleft }
 
 FUNCTION {format.names}
@@ -142,6 +171,23 @@ FUNCTION {format.editors}
   if$
 }
 
+FUNCTION {format.full.title}
+{ series empty$
+    { volume empty$
+	{ title }
+	{ title bbl.colon * bbl.volume * volume * }
+      if$
+    }
+    { volume empty$
+	{ series bbl.colon * title * }
+	{ series bbl.comma * bbl.volume * volume * bbl.colon * title * }
+      if$
+    }
+  if$
+}
+
+FUNCTION {format.mark}   { mark add.squarebracket }
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型函数定义
 %%
@@ -150,7 +196,12 @@ FUNCTION {format.editors}
 
 FUNCTION {book}
 { output.bibitem
-  format.authors add.period$ "author" output.check
+  author empty$
+    { format.editors bbl.period * "author and editor" output.check }
+    { format.authors bbl.period * output }
+  if$
+  "\newblock " format.full.title * "title" output.check
+  "M" set.mark format.mark "mark" output.check
 }
 
 
