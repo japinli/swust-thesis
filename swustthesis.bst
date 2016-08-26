@@ -470,6 +470,21 @@ FUNCTION {format.doi}
   if$
 }
 
+FUNCTION {format.school}
+{ school empty$
+    { "" }
+    { school }
+  if$
+}
+
+FUNCTION {format.address.school}
+{ format.address duplicate$ empty$
+    { skip$ }
+    { bbl.colon *}
+  if$
+  format.school *
+}
+
 FUNCTION {format.url.or.doi}
 { format.url duplicate$ empty$
     { pop$ format.doi }
@@ -579,6 +594,19 @@ FUNCTION {inbook.core}
   fin.entry
 }
 
+FUNCTION {thesis.core}
+{ output.bibitem
+  format.authors "author" output.check
+  new.block
+  format.title.mark "title" output.check
+  new.block
+  format.address.school "address and school" output.check
+  format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型函数定义
 %%
@@ -623,6 +651,39 @@ FUNCTION {incollection}
 FUNCTION {inproceedings}
 { "C" set.mark
   inbook.core
+}
+
+FUNCTION {proceedings}
+{ "C" set.mark
+  output.bibitem
+  format.editors "editor" output.check
+  new.block
+  format.series.volume.title.mark "title" output.check
+  new.block
+  format.translator output
+  new.block
+  format.edition output
+  new.block
+  publisher empty$
+    { skip$ }
+    { format.address.and.publisher
+      "address and publisher" output.check
+    }
+  if$
+  format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output  
+  fin.entry
+}
+
+FUNCTION {mastersthesis}
+{ "D" set.mark
+  thesis.core
+}
+
+FUNCTION {phdthesis}
+{ "D" set.mark
+  thesis.core
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
