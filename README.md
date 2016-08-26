@@ -64,5 +64,9 @@ swustthesis 说明
 
 ![硕士/博士论文封面](figures/master_doctor_titlepage.png)
 
+参考文献如下图所示：
+
+![参考文献](figures/reference_example.png)
+
 [TeX Live]: http://tug.org/texlive/
 [安装教程]: http://tug.org/texlive/quickinstall.html
