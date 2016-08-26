@@ -3,6 +3,7 @@ ENTRY
     author
     booktitle
     chapter
+    citedate
     doi
     edition
     editor
@@ -139,8 +140,8 @@ FUNCTION {num.to.ordinal.en}
   if$  
 }
 
-FUNCTION {bbl.colon}                {":"}
-FUNCTION {bbl.comma}                {","}
+FUNCTION {bbl.colon}                {": "}
+FUNCTION {bbl.comma}                {", "}
 FUNCTION {bbl.dash}                 {"--"}
 FUNCTION {bbl.double.slash}         {" //"}
 FUNCTION {bbl.period}               {". "}
@@ -330,6 +331,45 @@ FUNCTION {format.publisher}
   if$
 }
 
+FUNCTION {format.year}
+{ year empty$ { "" } { year } if$
+}
+
+FUNCTION {format.pages}
+{ pages empty$
+    { "" }
+    { pages }
+  if$
+}
+
+FUNCTION {format.citedate}
+{ citedate empty$
+    { "" }
+    { citedate add.squarebracket }
+  if$
+}
+
+FUNCTION {format.url}
+{ url empty$
+    { "" }
+    { "\url{" url * "}" * }
+  if$
+}
+
+FUNCTION {format.doi}
+{ doi empty$
+    { "" }
+    { "\doi{" doi * "}" * }
+  if$
+}
+
+FUNCTION {format.url.or.doi}
+{ format.url duplicate$ empty$
+    { pop$ format.doi }
+    { skip$ }
+  if$
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型函数定义
 %%
@@ -348,12 +388,16 @@ FUNCTION {book}
   format.translator output
   format.edition output
   publisher empty$
-    { skip$ }
+    { bbl.period output }
     { format.address "address" output.check
       format.publisher "publisher" output.check
+      bbl.comma output
     }
   if$
-  
+  format.year "year" output.check
+  format.pages output
+  format.citedate output
+  format.url.or.doi output
   fin.entry
 }
 
