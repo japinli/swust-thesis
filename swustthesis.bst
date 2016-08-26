@@ -15,6 +15,7 @@ ENTRY
     media
     month
     note
+    number
     organization
     pages
     publisher
@@ -30,10 +31,60 @@ ENTRY
   {}
   { label mark }
 
+FUNCTION {bbl.colon}                {": "}
+FUNCTION {bbl.comma}                {", "}
+FUNCTION {bbl.dash}                 {"--"}
+FUNCTION {bbl.double.slash}         {" //"}
+FUNCTION {bbl.period}               {". "}
+FUNCTION {bbl.space}                {" "}
+
 STRINGS { s t }
+INTEGERS { output.state before.all mid.sentence after.sentence after.block }
+
+FUNCTION {init.state.consts}
+{ #0 'before.all :=
+  #1 'mid.sentence :=
+  #2 'after.sentence :=
+  #4 'after.block :=
+}
+
+FUNCTION {new.block}
+{ output.state before.all =
+    { skip$ }
+    { after.block 'output.state := }
+  if$
+}
+
+FUNCTION {new.sentence}
+{ output.state after.block =
+    { skip$ }
+    { output.state before.all =
+	{ skip$ }
+	{ after.sentence 'output.state := }
+      if$
+    }
+  if$
+}
 
 FUNCTION {output.nonnull}
-{ write$
+{ 's :=
+  output.state mid.sentence =
+    { ", " * write$ }
+    { output.state after.block =
+	{ bbl.period * write$
+	  newline$
+	  "\newblock " write$
+	}
+	{ output.state before.all =
+	    { write$ }
+	    { bbl.period * " " * write$ }
+	  if$
+	}
+      if$
+      mid.sentence 'output.state :=
+    }
+  if$
+  s
 }
 
 FUNCTION {output}
@@ -55,10 +106,13 @@ FUNCTION {output.bibitem}
 { newline$
   "\bibitem{" write$ cite$ write$ "}" write$
   newline$
+  ""
+  before.all 'output.state :=
 }
 
 FUNCTION {fin.entry}
-{ newline$
+{ bbl.period * write$
+  newline$
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -140,12 +194,17 @@ FUNCTION {num.to.ordinal.en}
   if$  
 }
 
-FUNCTION {bbl.colon}                {": "}
-FUNCTION {bbl.comma}                {", "}
-FUNCTION {bbl.dash}                 {"--"}
-FUNCTION {bbl.double.slash}         {" //"}
-FUNCTION {bbl.period}               {". "}
-FUNCTION {bbl.space}                {" "}
+FUNCTION {remove.dots}
+{ 's :=
+  ""
+  { s empty$ not }
+  { s #1 #1 substring$
+    s #2 global.max$ substring$ 's :=
+    duplicate$ "." = { pop$ } { * } if$
+  }
+  while$
+}
+
 
 FUNCTION {bbl.anonymous.en}         {"Anon"}
 FUNCTION {bbl.anonymous.zh}         {"佚名"}
@@ -233,7 +292,7 @@ FUNCTION {format.names}
   #1 'nameindex :=
   s num.names$ 'namesleft :=
   { namesleft #0 > nameindex #4 < and }
-  { s nameindex "{vv~}{ ll{ }}{ f{ }}{, jj}" format.name$ 't :=
+  { s nameindex "{jj}{vv~}{ ll{ }}{ f{ }}" format.name$ 't :=
     t "u" change.case$ 't :=
     nameindex #1 >
       { namesleft #1 >
@@ -255,6 +314,7 @@ FUNCTION {format.names}
     namesleft #1 - 'namesleft :=
   }
   while$
+  remove.dots
 }
 
 FUNCTION {format.authors}
@@ -271,6 +331,8 @@ FUNCTION {format.editors}
   if$
 }
 
+FUNCTION {format.mark}   { mark add.squarebracket }
+
 FUNCTION {format.full.title}
 { series empty$
     { volume empty$
@@ -286,7 +348,28 @@ FUNCTION {format.full.title}
   if$
 }
 
-FUNCTION {format.mark}   { mark add.squarebracket }
+FUNCTION {format.journal}
+{ journal empty$
+    { "" }
+    { journal }
+  if$
+}
+
+%% volume(number)
+FUNCTION {format.volume.number.pages}
+{ volume empty$
+    { "" }
+    { volume }
+  if$
+  number empty$
+    { "" * }
+    { number add.bracket * }
+  if$
+  pages empty$
+    { "" * }
+    { bbl.colon * pages * }
+  if$
+}
 
 FUNCTION {format.translator}
 { translator empty$
@@ -296,7 +379,6 @@ FUNCTION {format.translator}
 	{ bbl.translate * }
 	{ bbl.comma * bbl.translate * }
       if$
-      bbl.period *
     }
   if$
 }
@@ -312,23 +394,31 @@ FUNCTION {format.edition}
 	}
 	{ skip$ }
       if$
-      "\mbox{" swap$ * "}" * bbl.period *
+      "\mbox{" swap$ * "}" *
     }
   if$
 }
 
 FUNCTION {format.address}
 { address empty$
-    { bbl.period bbl.no.address * }
-    { bbl.period address * }
+    { bbl.no.address }
+    { address }
   if$
 }
 
 FUNCTION {format.publisher}
 { publisher empty$
-    { bbl.colon bbl.no.publisher * }
-    { bbl.colon publisher * }
+    { bbl.no.publisher }
+    { publisher }
   if$
+}
+
+FUNCTION {format.address.and.publisher}
+{ format.address duplicate$ empty$
+    { skip$ }
+    { bbl.colon * }
+  if$
+  format.publisher *
 }
 
 FUNCTION {format.year}
@@ -338,7 +428,7 @@ FUNCTION {format.year}
 FUNCTION {format.pages}
 { pages empty$
     { "" }
-    { pages }
+    { bbl.colon pages * }
   if$
 }
 
@@ -346,6 +436,23 @@ FUNCTION {format.citedate}
 { citedate empty$
     { "" }
     { citedate add.squarebracket }
+  if$
+}
+
+FUNCTION {format.year.pages.citedate}
+{ format.pages 's :=
+  format.citedate 't :=
+  year empty$
+    { "" }
+    { year s empty$
+	{ skip$ }
+  	{ s * }
+      if$
+      t empty$
+  	{ skip$ }
+  	{ t *  }
+      if$
+    }  
   if$
 }
 
@@ -370,38 +477,153 @@ FUNCTION {format.url.or.doi}
   if$
 }
 
+FUNCTION {format.series.volume.title}
+{ series empty$
+    { volume empty$
+	{ title }
+	{ title bbl.colon * bbl.volume * volume * }
+      if$
+    }
+    { volume empty$
+	{ series bbl.colon * title * }
+	{ series bbl.comma * bbl.volume * volume * bbl.colon * title * }
+      if$
+    }
+  if$
+}
+
+FUNCTION {format.series.volume.title.mark}
+{ format.series.volume.title
+  format.mark *
+}
+FUNCTION {format.title.mark}
+{ title format.mark *
+}
+FUNCTION {format.full.title.mark}
+{ format.full.title format.mark *
+}
+
+FUNCTION {format.series.volume.booktitle}
+{ series empty$
+    { volume empty$
+	{ booktitle }
+	{ booktitle bbl.colon * bbl.volume * volume * }
+      if$
+    }
+    { volume empty$
+	{ series bbl.colon * booktitle * }
+	{ series bbl.comma * bbl.volume * volume *
+	  bbl.colon * booktitle *
+	}
+      if$
+    }
+  if$
+}
+
+FUNCTION {format.inbook.title}
+{ format.title.mark bbl.double.slash *
+  format.translator duplicate$ empty$
+    { pop$ }
+    { * bbl.period * }
+  if$
+  format.editors *
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 参考文献类型辅助函数定义
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+FUNCTION {book.core}
+{ output.bibitem
+  author empty$
+    { format.editors "author and editor" output.check }
+    { format.authors  output.nonnull }
+  if$
+  new.block
+  format.series.volume.title.mark "title" output.check
+  new.block
+  format.translator output
+  new.block
+  format.edition output
+  new.block
+  publisher empty$
+    { skip$ }
+    { format.address.and.publisher
+      "address and publisher" output.check
+    }
+  if$
+  format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
+FUNCTION {inbook.core}
+{ output.bibitem
+  format.authors "author" output.check
+  new.block
+  format.inbook.title "title" output.check
+  new.block
+  format.series.volume.booktitle "booktitle" output.check
+  new.block
+  format.edition output
+  publisher empty$
+    { skip$ }
+    { format.address.and.publisher
+      "address and publisher" output.check
+    }
+  if$
+  format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型函数定义
 %%
 %% 该处的函数由 call.type$ 在 ITERATE 中循环调用
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-FUNCTION {book}
-{ output.bibitem
-  author empty$
-    { format.editors bbl.period * "author and editor" output.check }
-    { format.authors bbl.period * output }
-  if$
-  newline$ "\newblock "
-  format.full.title * "title" output.check
-  "M" set.mark format.mark "mark" output.check bbl.period output
-  format.translator output
-  format.edition output
-  publisher empty$
-    { bbl.period output }
-    { format.address "address" output.check
-      format.publisher "publisher" output.check
-      bbl.comma output
-    }
-  if$
+FUNCTION {article}
+{ "J" set.mark
+  output.bibitem  
+  format.authors "author" output.check
+  new.block
+  format.title.mark "title" output.check
+  new.block
+  format.journal "journal" output.check
   format.year "year" output.check
-  format.pages output
-  format.citedate output
+  format.volume.number.pages output
+  new.block
   format.url.or.doi output
   fin.entry
 }
 
+FUNCTION {book}
+{ "M" set.mark
+  book.core
+}
 
+FUNCTION {collection}
+{ "G" set.mark
+  book.core
+}
+
+FUNCTION {inbook}
+{ "M" set.mark
+  inbook.core
+}
+
+FUNCTION {incollection}
+{ "G" set.mark
+  inbook.core
+}
+
+FUNCTION {inproceedings}
+{ "C" set.mark
+  inbook.core
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 文献管理的基本框架
@@ -451,6 +673,8 @@ EXECUTE {init.longest.label}
 ITERATE {longest.label.pass}
 
 EXECUTE {begin.bib}
+
+EXECUTE {init.state.consts}
 
 ITERATE {call.type$}
 
