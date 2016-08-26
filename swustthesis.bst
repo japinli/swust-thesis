@@ -56,6 +56,10 @@ FUNCTION {output.bibitem}
   newline$
 }
 
+FUNCTION {fin.entry}
+{ newline$
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 辅助函数
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,6 +90,55 @@ FUNCTION {is.digit}
   if$
 }
 
+FUNCTION {is.number}
+{ duplicate$ empty$ not swap$
+  { duplicate$ empty$ not }
+  { duplicate$ #1 #1 substring$ is.digit
+      { #2 global.max$ substring$ }
+      { pop$ pop$ #0 "" }
+    if$
+  }
+  while$
+  pop$
+}
+
+INTEGERS { i }
+FUNCTION {strlen}
+{ duplicate$ empty$
+    { pop$ #0 }
+    { #1 'i :=
+      #0
+      { not }
+      { duplicate$ i #1 substring$
+	"" = { #1 } { i #1 + 'i := #0 } if$
+      }
+      while$
+      pop$ i #1 -
+    }
+  if$
+}
+
+FUNCTION {get.last.chr}
+{ duplicate$ strlen
+  duplicate$ #0 = { pop$ } { #1 substring$ } if$
+}
+
+FUNCTION {num.to.ordinal.en}
+{ duplicate$ empty$
+    { skip$ }
+    { duplicate$ get.last.chr
+      duplicate$ "1" =
+	{ pop$ "st" }
+	{ duplicate$ "2" =
+	    { pop$ "nd" }
+	    { "3" = { "rd" } { "th" } if$ }
+	  if$
+	}
+      if$     
+    }
+  if$  
+}
+
 FUNCTION {bbl.colon}                {":"}
 FUNCTION {bbl.comma}                {","}
 FUNCTION {bbl.dash}                 {"--"}
@@ -93,12 +146,49 @@ FUNCTION {bbl.double.slash}         {" //"}
 FUNCTION {bbl.period}               {". "}
 FUNCTION {bbl.space}                {" "}
 
+FUNCTION {bbl.anonymous.en}         {"Anon"}
+FUNCTION {bbl.anonymous.zh}         {"佚名"}
+FUNCTION {bbl.anonymous}
+{ is.chinese
+    { bbl.anonymous.zh }
+    { bbl.anonymous.en }
+  if$
+}
+
+FUNCTION {bbl.edition.en}           {"~ed"}
+FUNCTION {bbl.edition.zh}           {"版"}
+FUNCTION {bbl.edition}
+{
+  is.chinese
+    { bbl.edition.zh }
+    { bbl.edition.en }
+  if$
+}
+
 FUNCTION {bbl.etal.en}              {"et al"}
 FUNCTION {bbl.etal.zh}              {"等"}
 FUNCTION {bbl.etal}
 { is.chinese
     { bbl.etal.zh }
     { bbl.etal.en }
+  if$
+}
+
+FUNCTION {bbl.no.address.en}        {"[S.l.]"}
+FUNCTION {bbl.no.address.zh}        {"[出版地不详]"}
+FUNCTION {bbl.no.address}
+{ is.chinese
+    { bbl.no.address.zh }
+    { bbl.no.address.en }
+  if$
+}
+
+FUNCTION {bbl.no.publisher.en}      {"[s.n.]"}
+FUNCTION {bbl.no.publisher.zh}      {"[出版者不详]"}
+FUNCTION {bbl.no.publisher}
+{ is.chinese
+    { bbl.no.publisher.zh }
+    { bbl.no.publisher.en }
   if$
 }
 
@@ -210,6 +300,36 @@ FUNCTION {format.translator}
   if$
 }
 
+FUNCTION {format.edition}
+{ edition empty$
+    { "" }
+    { edition duplicate$ is.number
+	{ is.chinese
+	    { bbl.edition.zh * }
+	    { num.to.ordinal.en * bbl.edition.en * }
+	  if$
+	}
+	{ skip$ }
+      if$
+      "\mbox{" swap$ * "}" * bbl.period *
+    }
+  if$
+}
+
+FUNCTION {format.address}
+{ address empty$
+    { bbl.period bbl.no.address * }
+    { bbl.period address * }
+  if$
+}
+
+FUNCTION {format.publisher}
+{ publisher empty$
+    { bbl.colon bbl.no.publisher * }
+    { bbl.colon publisher * }
+  if$
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型函数定义
 %%
@@ -226,6 +346,15 @@ FUNCTION {book}
   format.full.title * "title" output.check
   "M" set.mark format.mark "mark" output.check bbl.period output
   format.translator output
+  format.edition output
+  publisher empty$
+    { skip$ }
+    { format.address "address" output.check
+      format.publisher "publisher" output.check
+    }
+  if$
+  
+  fin.entry
 }
 
 
