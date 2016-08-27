@@ -33,7 +33,7 @@ ENTRY
 
 FUNCTION {bbl.colon}                {": "}
 FUNCTION {bbl.comma}                {", "}
-FUNCTION {bbl.dash}                 {"--"}
+FUNCTION {bbl.dash}                 {" -- "}
 FUNCTION {bbl.double.slash}         {" //"}
 FUNCTION {bbl.period}               {". "}
 FUNCTION {bbl.space}                {" "}
@@ -279,6 +279,46 @@ FUNCTION {set.mark}
   is.online
     { mark "/OL" * 'mark := }
     { media empty$ { skip$ } { mark "/" * media * 'mark := } if$ }
+  if$
+}
+
+FUNCTION {contain.dash}
+{ #0 swap$
+  { duplicate$ empty$ not }
+  { duplicate$ #1 #1 substring$ "-" =
+      { pop$ pop$ #1 "" }
+      { #2 global.max$ substring$ }
+    if$
+  }
+  while$
+  pop$
+}
+
+%% TODO: correct it
+FUNCTION {extract.before.first.dash}
+{ duplicate$ duplicate$ strlen swap$
+  duplicate$ empty$
+  { not }
+  { duplicate$ #1 #1 substring$ "-" =
+	  { #1 }
+	  { #2 global.max$ substring$
+	    duplicate$ empty$
+	  }
+	if$
+  }
+  while$
+  strlen -
+  #1 swap$ substring$
+}
+
+FUNCTION {extract.after.last.dash}
+{ duplicate$ contain.dash
+    { #2 global.max$ substring$
+      { duplicate$ contain.dash }
+      { #2 global.max$ substring$ }
+      while$
+    }
+    { pop$ "" }
   if$
 }
 
@@ -544,6 +584,60 @@ FUNCTION {format.inbook.title}
   format.editors *
 }
 
+FUNCTION {get.journal.first.year.vol.num}
+{ year extract.before.first.dash
+  volume empty$
+    { skip$ }
+    { bbl.comma *
+      volume extract.before.first.dash *      
+    }
+  if$
+  number empty$
+    { skip$ }
+    { number extract.before.first.dash
+      add.bracket *
+    }
+  if$
+}
+
+FUNCTION {get.journal.last.year.vol.num}
+{ year extract.after.last.dash duplicate$ empty$
+    { skip$ }
+    { bbl.dash swap$ * }
+  if$
+  volume empty$
+    { skip$ }
+    { bbl.comma *
+      volume extract.after.last.dash *
+    }
+  if$
+  number empty$
+    { skip$ }
+    { number extract.after.last.dash
+      add.bracket *
+    }
+  if$
+}
+
+FUNCTION {format.journal.year.vol.num}
+{ get.journal.first.year.vol.num
+  year contain.dash
+    { get.journal.last.year.vol.num * }
+    { skip$ }
+  if$
+
+}
+
+FUNCTION {format.year.range}
+{ year contain.dash
+    { year extract.before.first.dash
+      bbl.dash *
+      year extract.after.last.dash *
+    }
+    { year }
+  if$
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型辅助函数定义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -602,6 +696,26 @@ FUNCTION {thesis.core}
   new.block
   format.address.school "address and school" output.check
   format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
+FUNCTION {journal.core}
+{ output.bibitem
+  format.editors "editor" output.check
+  new.block
+  format.title.mark "title" output.check
+  new.block
+  format.journal.year.vol.num "year" output.check
+  new.block
+  publisher empty$
+    { skip$ }
+    { format.address.and.publisher
+      "address and publisher" output.check
+    }
+  if$
+  format.year.range "year" output.check
   new.block
   format.url.or.doi output
   fin.entry
@@ -684,6 +798,11 @@ FUNCTION {mastersthesis}
 FUNCTION {phdthesis}
 { "D" set.mark
   thesis.core
+}
+
+FUNCTION {periodical}
+{ "J" set.mark
+  journal.core
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
