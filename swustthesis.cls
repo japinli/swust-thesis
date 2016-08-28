@@ -144,7 +144,7 @@
 \fi
 \newpagestyle{front}[\swust@header@size\swust@header@font]{
   \ifswust@opt@bachelor
-    \sethead{}{\swust@header@title}{}
+    \sethead{}{\swust@header@title}{\thepage}
     \renewcommand{\makeheadrule}{
       \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
       \rule[-.5\baselineskip]{\linewidth}{2pt}
@@ -162,6 +162,7 @@
 \newpagestyle{main}[\swust@header@size\swust@header@font]{
   \ifswust@opt@bachelor
     \sethead{}{\swust@header@title}{}
+    \setfoot{}{\thepage}{}
     \renewcommand{\makeheadrule}{
       \makebox[0pt][l]{\rule[-.3\baselineskip]{\linewidth}{.5pt}}
       \rule[-.5\baselineskip]{\linewidth}{2pt}
