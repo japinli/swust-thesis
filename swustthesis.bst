@@ -453,7 +453,7 @@ FUNCTION {format.publisher}
   if$
 }
 
-FUNCTION {format.address.and.publisher}
+FUNCTION {format.address.publisher}
 { format.address duplicate$ empty$
     { skip$ }
     { bbl.colon * }
@@ -638,6 +638,32 @@ FUNCTION {format.year.range}
   if$
 }
 
+FUNCTION {format.techreport.title.mark}
+{ title title empty$
+    { "techreport title is empty" warning$ }
+    { number empty$
+	{ skip$ }
+	{ bbl.colon *
+	  number *
+	}
+      if$
+      mark add.squarebracket *
+    }
+  if$
+}
+
+FUNCTION {format.address.institution}
+{ address empty$
+    { bbl.no.address }
+    { address }
+  if$
+  bbl.colon *
+  institution empty$
+    { bbl.no.publisher * }
+    { institution * }
+  if$
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 参考文献类型辅助函数定义
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -657,7 +683,7 @@ FUNCTION {book.core}
   new.block
   publisher empty$
     { skip$ }
-    { format.address.and.publisher
+    { format.address.publisher
       "address and publisher" output.check
     }
   if$
@@ -678,7 +704,7 @@ FUNCTION {inbook.core}
   format.edition output
   publisher empty$
     { skip$ }
-    { format.address.and.publisher
+    { format.address.publisher
       "address and publisher" output.check
     }
   if$
@@ -711,7 +737,7 @@ FUNCTION {journal.core}
   new.block
   publisher empty$
     { skip$ }
-    { format.address.and.publisher
+    { format.address.publisher
       "address and publisher" output.check
     }
   if$
@@ -780,7 +806,7 @@ FUNCTION {proceedings}
   new.block
   publisher empty$
     { skip$ }
-    { format.address.and.publisher
+    { format.address.publisher
       "address and publisher" output.check
     }
   if$
@@ -789,6 +815,9 @@ FUNCTION {proceedings}
   format.url.or.doi output  
   fin.entry
 }
+
+FUNCTION {conference}
+{ proceedings }
 
 FUNCTION {mastersthesis}
 { "D" set.mark
@@ -803,6 +832,41 @@ FUNCTION {phdthesis}
 FUNCTION {periodical}
 { "J" set.mark
   journal.core
+}
+
+FUNCTION {techreport}
+{ "R" set.mark
+  output.bibitem
+  format.authors "author" output.check
+  new.block
+  format.techreport.title.mark "title" output.check
+  new.block
+  format.address.institution output
+  format.year.pages.citedate output
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
+FUNCTION {standard}
+{ "S" set.mark
+  output.bibitem
+  format.authors "authors" output.check
+  new.block
+  format.title.mark "title" output.check
+  new.block
+  format.translator output
+  new.block
+  format.edition output
+  new.block
+  publisher empty$
+    { skip$ }    
+    { format.address.publisher output }
+  if$  
+  format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
