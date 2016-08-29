@@ -523,14 +523,24 @@
 \graphicspath{{./}{figures/}}
 \numberwithin{figure}{chapter}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\RequirePackage[numbers,super,sort&compress]{natbib}
+\bibpunct{[}{]}{,}{s}{}{,}
+
+\newcommand{\inlinecite}[1]{
+  \begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup
+}
+\renewcommand{\thebibliography}[1]{
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \@mainmatterfalse
+  \chapter{\bibname}
+  \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}
+}
 \newenvironment{acknowledgements}{
   \chapter{致谢}
 }{}
 \newenvironment{publications}{
   \chapter{攻读学位期间取得的研究成果}
 }{}
-\RequirePackage{booktabs}
-\RequirePackage{longtable}
 \endinput
 %%
 %% End of file `swustthesis.cls'.

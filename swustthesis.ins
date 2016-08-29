@@ -33,7 +33,8 @@ LaTeX version 2005/12/01 or later.
 
 \endpreamble
 
-\generate{\file{\jobname.cls}{\from{\jobname.dtx}{class}}}
+\generate{\file{\jobname.cls}{\from{\jobname.dtx}{class}}
+          \file{swustextra.sty}{\from{\jobname.dtx}{package}}}
 
 \obeyspaces
 \Msg{*************************************************************************}
@@ -42,6 +43,7 @@ LaTeX version 2005/12/01 or later.
 \Msg{* file into a directory searched by TeX:                                *}
 \Msg{*                                                                       *}
 \Msg{*   swustthesis.cls                                                     *}
+\Msg{*   swustextra.sty                                                      *}
 \Msg{*                                                                       *}
 \Msg{* To produce the documentation run the file swustthesis.dtx             *}
 \Msg{* through LaTeX.                                                        *}

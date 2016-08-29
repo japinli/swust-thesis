@@ -20,6 +20,9 @@
 %<*driver>
 \ProvidesFile{swustthesis.dtx}
 %</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<package>\ProvidesPackage{swustextra}
+%<package>    [2016/08/21 v0.0.2 SWUST Thesis Extra Package]
 %<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<class>\ProvidesClass{swustthesis}
 %<*class>
@@ -94,6 +97,7 @@
 % \changes{v0.0.2}{2016/08/21}{使用~dtx~创建文件类文件}
 % \changes{v0.0.2}{2016/08/22}{添加编译说明文档}
 % \changes{v0.0.2}{2016/08/23}{修改图表引用格式}
+% \changes{v0.0.2}{2016/08/29}{添加参考文献格式定义，部分格式尚未完成}
 %
 % \GetFileInfo{swustthesis.dtx}
 %
@@ -143,11 +147,14 @@
 %     模板文件      & swustthesis.dtx  & 模板原始文件 \\
 %                   & swustthesis.ins  & 用于生成文档类文件 \\
 %                   & swustthesis.cls  & 文档类文件  \\
+%                   & swustthesis.bst  & 参考文献格式定义 \\
+%                   & swustextra.sty   & 额外所需宏包及定义 \\
 %     \midrule
-%     使用手册      & swustthesis.pdf  & 模板使用说明 \\
+%     使用手册      & main.pdf         & 论文示例模板 \\
+%                   & swustthesis.pdf  & 模板使用说明 \\
 %                   & READMD.md        & 项目说明文件 \\
 %     \midrule
-%     示例文件      & main.tex         & 论文示例模板  \\
+%     示例文件      & main.tex         & 论文示例模板源文件  \\
 %                   & figures/         & 图片存放目录  \\
 %                   & chapters/        & 论文章节示例  \\
 %     \midrule
@@ -157,12 +164,12 @@
 % \end{tabularx}
 % \end{center}
 %
-% 文件~swustthesis.ins~用于生成~swustthesis~类文件，该过程中需要读
-% 取~swustthesis.dtx~文件；文件~swustthesis.dtx~是模板的原始代码文件，
-% 它用于自动生成模板使用说明文件~swustthesis.pdf~。原始模板文件仅供
-% 模板开发者使用，一般用户无需使用。~main.tex~是论文示例模板文件，该文
-% 件通过引入~chapters/~目录下的文件来组织论文结构，~figures~目录则存放
-% 论文中使用到的图片资源。
+% 文件~swustthesis.ins~用于生成~swustthesis~类文件和~swustextra~包文件，
+% 该过程中需要读取~swustthesis.dtx~文件；文件~swustthesis.dtx~是模板的
+% 原始代码文件，它用于自动生成模板使用说明文件~swustthesis.pdf~。原始模
+% 板文件仅供模板开发者使用，一般用户无需使用。~main.tex~是论文示例模板文
+% 件，该文件通过引入~chapters/~目录下的文件来组织论文结构，~figures~目录
+% 则存放论文中使用到的图片资源。
 %
 % \subsection{编译}
 %
@@ -194,7 +201,7 @@
 %
 % \StopEventually{}
 %
-% \section{代码实现}\label{sec:codeimplementation}
+% \section{swustthesis 代码实现}\label{sec:codeimplementation}
 %
 % \subsection{声明选项}
 %
@@ -888,6 +895,26 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsection{参考文献}
+% 
+% \begin{macro}{thebibliography}
+% 由于默认情况下参考文献不会出现在目录索引中，因此重定义。
+%    \begin{macrocode}
+\RequirePackage[numbers,super,sort&compress]{natbib}
+\bibpunct{[}{]}{,}{s}{}{,}
+
+\newcommand{\inlinecite}[1]{
+  \begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup
+}
+\renewcommand{\thebibliography}[1]{
+  \if@openright\cleardoublepage\else\clearpage\fi
+  \@mainmatterfalse
+  \chapter{\bibname}
+  \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}  
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{其他}
 % \begin{environment}{acknowledgements}
 % 致谢环境
@@ -906,9 +933,26 @@
 %    \end{macrocode}
 % \end{environment}
 %    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \section{~swustextra~ 代码实现}
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+% \subsection{导入依赖宏包}
+%  ~booktabs~用于绘制三线表格，~longtable~用于绘制跨页表格。
+%    \begin{macrocode}
 \RequirePackage{booktabs}
 \RequirePackage{longtable}
-%</class>
+%    \end{macrocode}
+% \subsection{参考文献设置}
+% 使用自定义的参考文献格式
+%    \begin{macrocode}
+\bibliographystyle{swustthesis}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</package>
 %    \end{macrocode}
 % \Finale
 \endinput
