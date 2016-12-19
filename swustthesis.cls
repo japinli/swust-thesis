@@ -526,6 +526,8 @@
 \RequirePackage[numbers,super,sort&compress]{natbib}
 \bibpunct{[}{]}{,}{s}{}{,}
 
+\setlength{\bibsep}{0.5ex}
+
 \newcommand{\inlinecite}[1]{
   \begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup
 }

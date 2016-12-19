@@ -903,6 +903,8 @@
 \RequirePackage[numbers,super,sort&compress]{natbib}
 \bibpunct{[}{]}{,}{s}{}{,}
 
+\setlength{\bibsep}{0.5ex}
+
 \newcommand{\inlinecite}[1]{
   \begingroup\let\@cite\NAT@citenum\citep{#1}\endgroup
 }
@@ -947,8 +949,18 @@
 \RequirePackage{longtable}
 %    \end{macrocode}
 % \subsection{列表}
+% itemindent: 标签缩进量
+% itemsep: 条目之间的间距
+% topsep: 列表到上下文的垂直距离
+% listparindent: 列表中段落缩进
+% leftmargin: 左边界
+% labelsep: 标号和列表项之间的距离
+% parsep: 段落间距
 %    \begin{macrocode}
 \RequirePackage{enumitem}
+\renewcommand{\labelenumi}{(\arabic{enumi})}
+\setitemize[1]{itemindent=4em,itemsep=0ex,parsep=0ex,topsep=0ex,listparindent=2em,leftmargin=0em}
+\setenumerate[1]{itemindent=4em,itemsep=0ex,parsep=0ex,topsep=0ex,listparindent=2em,leftmargin=0em}
 %    \end{macrocode}
 % \subsection{参考文献设置}
 % 使用自定义的参考文献格式
