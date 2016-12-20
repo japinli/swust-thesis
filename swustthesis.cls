@@ -195,6 +195,7 @@
   \@afterindenttrue
   \secdef\@chapter\@schapter
 }
+\setcounter{secnumdepth}{4}
 \ifswust@opt@bachelor
   \ctexset{
     chapter       = {
