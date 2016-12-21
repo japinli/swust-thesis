@@ -501,29 +501,18 @@
     }
   }
 \fi
+
+\RequirePackage{ccaption}
+\captiondelim{\hspace{1\ccwd}}
+\captionnamefont{\zihao{5}\bf}
+\captiontitlefont{\zihao{5}\bf}
+\setlength{\abovecaptionskip}{6bp}
 \RequirePackage{amsmath}
-\RequirePackage{caption}
-\DeclareCaptionLabelSeparator{zhspace}{\hspace{1\ccwd}}
-\DeclareCaptionFont{fontsize}{\zihao{5}}
-\captionsetup{
-  font = {fontsize, bf},
-  labelsep = zhspace,
-}
-\captionsetup[table]{
-  position = top,
-  aboveskip = 6bp,
-  belowskip = 6bp,
-}
 \numberwithin{table}{chapter}
-\renewcommand{\thetable}{\thechapter-\arabic{table}}
-\captionsetup[figure]{
-  position = bottom,
-  aboveskip = 6bp,
-  belowskip = 6bp,
-}
-\graphicspath{{./}{figures/}}
 \numberwithin{figure}{chapter}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\graphicspath{{./}{figures/}}
 \RequirePackage[numbers,super,sort&compress]{natbib}
 \bibpunct{[}{]}{,}{s}{}{,}
 

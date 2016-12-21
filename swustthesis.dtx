@@ -856,48 +856,27 @@
 % \end{macro}
 %
 % \subsection{图、表}
-% 使用~caption~设置图表格式，使用~amsmath~设置图表编号
+% 使用~ccaption~设置图表双语标题，使用~amsmath~设置图表编号
+%    \begin{macrocode}
+
+\RequirePackage{ccaption}
+\captiondelim{\hspace{1\ccwd}}
+\captionnamefont{\zihao{5}\bf}
+\captiontitlefont{\zihao{5}\bf}
+\setlength{\abovecaptionskip}{6bp}
+%    \end{macrocode}
+% 使用amsmath设置图表编号
 %    \begin{macrocode}
 \RequirePackage{amsmath}
-\RequirePackage{caption}
-\DeclareCaptionLabelSeparator{zhspace}{\hspace{1\ccwd}}
-\DeclareCaptionFont{fontsize}{\zihao{5}}
-\captionsetup{
-  font = {fontsize, bf},
-  labelsep = zhspace,
-}
-%    \end{macrocode}
-% 表格设置
-%    \begin{macrocode}
-\captionsetup[table]{
-  position = top,
-  aboveskip = 6bp,
-  belowskip = 6bp,  
-}
 \numberwithin{table}{chapter}
-%    \end{macrocode}
-% \begin{macro}{\thetable}
-% 重定义表格编号，按章节对表格进行编号
-%    \begin{macrocode}
-\renewcommand{\thetable}{\thechapter-\arabic{table}}
-%    \end{macrocode}
-% \end{macro}
-% 图片设置
-%    \begin{macrocode}
-\captionsetup[figure]{
-  position = bottom,
-  aboveskip = 6bp,
-  belowskip = 6bp,  
-}
-\graphicspath{{./}{figures/}}
 \numberwithin{figure}{chapter}
-%    \end{macrocode}
-% \begin{macro}{\thefigure}
-% 重定义图片编号，按章节对图片进行编号
-%    \begin{macrocode}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
 \renewcommand{\thefigure}{\thechapter-\arabic{figure}}
 %    \end{macrocode}
-% \end{macro}
+% 图片路径设置
+%    \begin{macrocode}
+\graphicspath{{./}{figures/}}
+%    \end{macrocode}
 %
 % \subsection{参考文献}
 % 
@@ -947,10 +926,9 @@
 %    \end{macrocode}
 %
 % \subsection{导入依赖宏包}
-%  ~booktabs~用于绘制三线表格，~longtable~用于绘制跨页表格。
+%  利用tabu进行表格绘制。更多关于tabu的使用请查看其使用手册。
 %    \begin{macrocode}
-\RequirePackage{booktabs}
-\RequirePackage{longtable}
+\RequirePackage{tabu}
 %    \end{macrocode}
 % \subsection{列表}
 % itemindent: 标签缩进量
