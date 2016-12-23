@@ -14,33 +14,35 @@
 
 ENTRY
   { address
-    author
+    author                      % 作者
     booktitle
     chapter
-    citedate
+    citedate                    % 引用日期
+    country                     % 国家
     doi
-    edition
-    editor
+    edition                     % 版本
+    editor                      % 编辑
     howpublished
     institution
-    journal
+    journal                     % 期刊名
     key
-    lang
+    lang                        % 文献语言
     media
     month
     note
     number
     organization
-    pages
-    publisher
-    school
+    pages                       % 引用页码
+    patentid                    % 专利编号
+    publisher                   % 出版社
+    school                      % 学校
     series
-    title
-    translator
+    title                       % 题目
+    translator                  % 翻译者
     type
     url
     volume
-    year
+    year                        % 年份
   }
   {}
   { label mark }
@@ -572,6 +574,22 @@ FUNCTION {format.full.title.mark}
 { format.full.title format.mark *
 }
 
+FUNCTION {format.patent}
+{ country empty$ not
+    { bbl.colon country *
+      patentid empty$ not
+        { bbl.comma * patentid * }
+        { "required patentid: " cite$ * warning$ }
+      if$
+    }
+    { "required country for patent: " cite$ * warning$ }
+  if$
+}
+
+FUNCTION {format.patent.title.mark}
+{ title format.patent * format.mark *
+}
+
 FUNCTION {format.series.volume.booktitle}
 { series empty$
     { volume empty$
@@ -862,6 +880,20 @@ FUNCTION {techreport}
   fin.entry
 }
 
+
+FUNCTION {patent}
+{ "P" set.mark
+  output.bibitem
+  format.authors "author" output.check
+  new.block
+  format.patent.title.mark "title" output.check
+  new.block
+  format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
 FUNCTION {standard}
 { "S" set.mark
   output.bibitem
@@ -878,6 +910,23 @@ FUNCTION {standard}
     { format.address.publisher output }
   if$  
   format.year.pages.citedate "year" output.check
+  new.block
+  format.url.or.doi output
+  fin.entry
+}
+
+FUNCTION {online}
+{ "EB" set.mark
+  output.bibitem
+  format.authors output
+  new.block
+  format.title.mark "title" output.check
+  new.block
+  publisher empty$
+    { skip$ }
+    { format.address.publisher output }
+  if$
+  format.year.pages.citedate output
   new.block
   format.url.or.doi output
   fin.entry
