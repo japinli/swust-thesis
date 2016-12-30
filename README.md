@@ -47,6 +47,12 @@ swustthesis 说明
 
 例如，编写硕士论文并要单面打印可以按如下方式加载`swustthesis`类。
 
+注意事项
+--------
+
+1. 在引用图片时，最好采用英文命名，中文命名可能由于编码问题导致无法找
+   到文件。
+
 ```
 \documentclass[oneside, master]{swustthesis}
 ```
