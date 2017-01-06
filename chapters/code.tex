@@ -1,0 +1,10 @@
+\chapter{代码示例}
+
+\begin{lstlisting}[style=swustsql]
+  CREATE TABLE `block_checksum` (
+  	`id` bigint(20) NOT NULL,
+  	`checksum` bigint(20) NOT NULL,
+  	`sha1` varchar(256) NOT NULL,
+	PRIMARY KEY (`id`)
+  ) ENGINE=InnonDB DEFAULT CHARSET=utf8;
+\end{lstlisting}

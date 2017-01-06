@@ -26,6 +26,26 @@
 \renewcommand{\labelenumi}{(\arabic{enumi})}
 \setitemize[1]{itemindent=4em,itemsep=0ex,parsep=0ex,topsep=0ex,listparindent=2em,leftmargin=0em}
 \setenumerate[1]{itemindent=4em,itemsep=0ex,parsep=0ex,topsep=0ex,listparindent=2em,leftmargin=0em}
+\RequirePackage{color}
+\RequirePackage{listings}
+\lstset{
+  language={[ANSI]C},
+  tabsize=2,
+  numbers=left,
+  xleftmargin=1em,
+  xrightmargin=1em,
+  breaklines=true,
+  breakatwhitespace=true,
+  basicstyle=\tt,
+  directivestyle=\tt,
+  identifierstyle=\tt,
+  commentstyle=\tt,
+  stringstyle=\tt,
+  keywordstyle=\color{blue}\tt
+}
+\lstdefinestyle{swustsql}{
+  language=SQL
+}
 \bibliographystyle{swustthesis}
 \endinput
 %%
