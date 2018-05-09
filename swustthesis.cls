@@ -5,19 +5,19 @@
 %% The original source files were:
 %%
 %% swustthesis.dtx  (with options: `class')
-%% 
+%%
 %% Copyright (C) 2016 by japinli <japinli@hotmail.com>
-%% 
+%%
 %% This file may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either
 %% version 1.3 of this license or (at your option) any later
 %% version. The latest version of this license is in:
-%% 
+%%
 %%    http://www.latex-project.org/lppl.txt
-%% 
+%%
 %% and version 1.3 or later is part of all distributions of
 %% LaTeX version 2005/12/01 or later.
-%% 
+%%
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesClass{swustthesis}
     [2016/08/21 v0.0.2 SWUST Thesis Template]
@@ -57,10 +57,10 @@
     \PassOptionsToClass{oneside}{ctexbook}
 \fi
 \LoadClass[a4paper,UTF8,zihao=-4]{ctexbook}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Courier New}
-\newCJKfontfamily{\hwxk}{STXingkai}
+%% \setmainfont{Times New Roman}
+%% \setsansfont{Arial}
+%% \setmonofont{Courier New}
+%% \newCJKfontfamily{\hwxk}{STXingkai}
 \RequirePackage{hyperref}
 \hypersetup{
   CJKbookmarks=true,
