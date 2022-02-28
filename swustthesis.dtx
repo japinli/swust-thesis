@@ -478,23 +478,23 @@
       number      = \thechapter,
       format      = \centering\zihao{-2}\heiti,
       beforeskip  = 2ex,
-      afterskip   = 1ex,      
+      afterskip   = 1ex,
     },
     section       = {
       format      = \raggedright\zihao{4}\heiti,
       beforeskip  = 1ex,
-      afterskip   = .5ex,      
+      afterskip   = .5ex,
     },
     subsection    = {
       format      = \raggedright\zihao{-4}\songti,
       beforeskip  = .5ex,
-      afterskip   = 0ex,      
+      afterskip   = 0ex,
     },
     subsubsection = {
       format      = \raggedright\zihao{-4}\songti,
       beforeskip  = 0ex,
-      afterskip   = 0ex,      
-    },  
+      afterskip   = 0ex,
+    },
   }
 \else
   \ctexset{
@@ -503,23 +503,23 @@
       number      = \thechapter,
       format      = \centering\zihao{3},
       beforeskip  = 2ex,
-      afterskip   = 1ex,      
+      afterskip   = 1ex,
     },
     section       = {
       format      = \raggedright\zihao{-3},
       beforeskip  = 1ex,
-      afterskip   = .5ex,      
+      afterskip   = .5ex,
     },
     subsection    = {
       format      = \raggedright\zihao{4},
       beforeskip  = .5ex,
-      afterskip   = 0ex,      
+      afterskip   = 0ex,
     },
     subsubsection = {
       format      = \raggedright\zihao{-4},
       beforeskip  = 0ex,
-      afterskip   = 0ex,      
-    },  
+      afterskip   = 0ex,
+    },
   }
 \fi
 %    \end{macrocode}
@@ -532,7 +532,7 @@
 \renewcommand{\tableofcontents}{
   \if@openright\cleardoublepage\else\clearpage\fi
   \pdfbookmark[0]{\swust@pdf@contentsname}{swusttoc}
-  \swust@save@tableofcontents  
+  \swust@save@tableofcontents
 }
 %    \end{macrocode}
 % \begin{macro}{\contentsname}
@@ -724,7 +724,7 @@
           \zihao{3}Southwest University of Science and Technology \\
         \end{tabular}
       \end{minipage}
-  
+
       \centering
       \vspace{2cm}
       \heiti\zihao{-0}{本科毕业设计（论文）} \\
@@ -762,7 +762,7 @@
     \end{titlepage}
     \swust@zh@titlepage\cleardoublepage
     \swust@en@titlepage\cleardoublepage
-    \swust@make@statement\cleardoublepage  
+    \swust@make@statement\cleardoublepage
   }
 \fi
 %    \end{macrocode}
@@ -780,7 +780,7 @@
       \zihao{-1}\heiti\swust@zhtitle
       \vspace{1ex}
     \end{center}
-  
+
     {
       \noindent\zihao{-4}\heiti 摘要：
     }
@@ -804,7 +804,7 @@
       \zihao{-1}\textbf{\swust@entitle}
       \vspace{1ex}
     \end{center}
-  
+
     \noindent\zihao{-4}\textbf{Abstract: }
   }{}
 \else
@@ -829,7 +829,7 @@
     \par\phantom{关键词}\par\noindent
     {
       #1\textbf{关键词：}#2
-    }              
+    }
   }
 \fi
 %    \end{macrocode}
@@ -849,7 +849,7 @@
     \par\phantom{keywords}\par\noindent
     {
       #1\textbf{KEY WORDS: }#2
-    }              
+    }
   }
 \fi
 %    \end{macrocode}
@@ -875,11 +875,12 @@
 %    \end{macrocode}
 % 图片路径设置
 %    \begin{macrocode}
+\RequirePackage{graphicx}
 \graphicspath{{./}{figures/}}
 %    \end{macrocode}
 %
 % \subsection{参考文献}
-% 
+%
 % \begin{macro}{thebibliography}
 % 由于默认情况下参考文献不会出现在目录索引中，因此重定义。
 %    \begin{macrocode}
@@ -895,7 +896,7 @@
   \if@openright\cleardoublepage\else\clearpage\fi
   \@mainmatterfalse
   \chapter{\bibname}
-  \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}  
+  \list{\@biblabel{\the\c@NAT@ctr}}{\@bibsetup{#1}\global\c@NAT@ctr\z@}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -963,10 +964,10 @@
   identifierstyle=\tt,
   commentstyle=\tt,
   stringstyle=\tt,
-  keywordstyle=\color{blue}\tt  
+  keywordstyle=\color{blue}\tt
 }
 \lstdefinestyle{swustsql}{
-  language=SQL  
+  language=SQL
 }
 %    \end{macrocode}
 % 使用自定义的参考文献格式
