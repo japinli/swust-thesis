@@ -1,8 +1,91 @@
-\chapter{文献引用}\label{chap:refs}
+\chapter{参考文献格式说明}\label{chap:refs}
 
-本论文采用~BIB\TeX~并使用~\texttt{swustthesis.bst}~样式文件进行参考文
-献的引用。关于书的引用~\cite{余敏2001出版集团研究,anwen1988}。在引用中
-文文献时，需要添加~\texttt{lang=zh}。若不想使用上标时，可以采用
-\verb|\inlinecite{liuwu1999}| => \inlinecite{liuwu1999} 引用文献。
+\newlength{\oldparindent}
+\setlength{\oldparindent}{\parindent}
+\setlength{\parindent}{0pt}
 
-多篇连续的文章~\cite{1-11,a2-1,a2-2,a2-3,1-5}。
+参考文献格式举例说明：\\
+
+
+\textbf{学期期刊}
+
+［1］作者. 文献题名[J]. 刊名, 出版年份, 卷号（期号）：起-止页
+
+{\color{red}
+[1] 吴向伟，徐江波．建设具有强大凝聚力和引领力的社会主义意识形态：内涵、逻辑与路径［J］．宜春学院学报，2023，45（07）：17-23．
+
+[2] Yu WX, Hong WZ, Peng FR. Unified scheduling for predictable communication reliability in cellular networks with D2D Links[J]. Computer Communications, 2021, 30(1): 167.
+} \\
+
+
+\textbf{学术著作}
+
+［1］作者．书名[M]．版次(首次免注).翻译者.出版地:出版社, 出版年: 起-止页码
+
+{\color{red}
+[1] 刘勇，石方文，孙学康．多媒体通信技术与应用[M]．人民邮电出版社，2017，95-123．} \\
+
+\textbf{有ISBN号的论文集}
+
+［1］主编．论文集名[C]．出版地：出版社,出版年：起-止页码
+
+{\color{red}
+[1] 陈峥，吴双，尹耕等．基于物联网的电厂通信设备大数据平台及应用研究[C]//《施工技术》杂志社，亚太建设科技信息研究院有限公司，2022年全国土木工程施工技术交流会论文集（上册）．
+} \\
+
+\textbf{学位论文}
+
+［1］作者．题名[D]．保存地：保存单位,年份
+
+{\color{red}
+[1] 王庆毅．非正交复用隐蔽通信系统的传输方法研究[D]．西安理工大学，2023．
+} \\
+
+\textbf{专利文献}
+
+［1］专利所有者．专利题名[P]．专利国别：专利号,发布日期
+
+{\color{red}
+[1] 王哲，陆钧，贺凡波等．无人机通信基站、通信系统以及通信系统的组建方法[P]．安徽省：CN110176955B，2023-08-25．
+} \\
+
+\textbf{技术标准}
+
+［1］标准代号,标准名称[S]．出版地：出版者,出版年
+
+{\color{red}
+[1] GB/T 42126.1-2022，基于蜂窝网络的工业无线通信规范 第1部分：通用技术要求[S]．中国，中国机械工业联合会，2022.
+} \\
+
+\textbf{报纸文章}
+
+［1］作者．题名[N]．报纸名,出版日期(版次)
+
+{\color{red}
+[1] 思想之旗领航向[N]．人民日报，2023-09-15（007）．
+} \\
+
+\textbf{报告}
+
+［1］作者．文献题名[R]．报告地：报告会主办单位,年份
+
+{\color{red}
+[1] Fischer DG, Greenberg P. Particulate Sensor Technology Development at NASA Glenn Research Center[R]. National Aeronautics and Space Administration, 2020.
+} \\
+
+\textbf{电子文献}
+
+［1］作者．电子文献题名[文献类型/载体类型]．文献网址或出处,发表或更新日期/引用日期(任选)
+
+{\color{red}
+[1] 孙永全，钱湘伟，方晓彤等．电磁环境下数据链通信设备可靠性建模方法[J/OL]．哈尔滨理工大学学报，2023（03）：80-87．
+}
+
+%本论文采用~BIB\TeX~并使用~\texttt{swustthesis.bst}~样式文件进行参考文
+%献的引用。关于书的引用~\cite{余敏2001出版集团研究,anwen1988}。在引用中
+%文文献时，需要添加~\texttt{lang=zh}。若不想使用上标时，可以采用
+%\verb|\inlinecite{liuwu1999}| => \inlinecite{liuwu1999} 引用文献。
+%
+%多篇连续的文章~\cite{1-11,a2-1,a2-2,a2-3,1-5}。
+
+\setlength{\parindent}{\oldparindent}

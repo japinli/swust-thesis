@@ -1,0 +1,159 @@
+\chapter{图、表、公式、参考文献标注规范}
+
+图、表、公式等的序号用阿拉伯数字分章连续编号，如图 1-1、图 1-2、表 2-1、 表 2-2 等，但不出现“公式”两字，将编号置入小括号中，如(3-1)等。\textcolor{red}{图、表和公式 等与正文之间间隔 0.5 行}。
+
+\section{图规范}
+
+\textbf{图的大小一般为宽 6.67cm $\times$ 高 5.00cm。特殊情况下，
+也可宽 9.00cm $\times$ 高 6.75cm， 或宽 13.5cm $\times$ 高 9.00cm。}
+同类图片的大小应一致。图片的编排应美观、整齐。
+\textcolor{red}{举例说 明(实际应用时字体为黑色)：}
+
+{
+\captionsetup[figure]{font+={color=red}}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=9.00cm,height=5.00cm]{figure-example}
+  \caption{图规范示例\label{fig:figure-example}}
+\end{figure}%
+}%
+%
+%在 \LaTeX{}中，您可以使用 \verb|\ref{fig:figure-example}| 来引用图。
+%例如参考图 \ref{fig:figure-example}。
+\section{表规范}
+
+一律使用三线表，与文字齐宽，\textbf{上下边线，线粗 1.5 磅，表内线，线粗 1 磅}。
+在三线表中可以加辅助线，以适应较复杂表格的需要。表中用字一般为五号字。
+如排列过密，用五号字有困难时，可小于五号字，但不小于七号。
+\textcolor{red}{举例说明（实际应用时字体为黑色）：}
+% 标准长表格环境：longtblr
+{% 临时修改表标题样式
+\SetTblrStyle{caption-tag}{fg=red}
+\SetTblrStyle{caption-sep}{fg=red}
+\SetTblrStyle{caption-text}{fg=red}
+\SetTblrStyle{conthead-text}{fg=red}
+\begin{longtblr}[
+  % 标题与标签直接卸载这里，系统会自动在第一页渲染主标题，在后续页渲染续表标题
+  caption = {西南科技大学人数统计\textsuperscript{[1]}},
+  label   = {tab:swust_stat},
+]{
+  % colspec: 完美的弹性撑满列控（1列靠左，4列自适应X弹性居中）
+  colspec = {l *{4}{X[l]}},
+}
+  % ------------------ 第 1 行：表头（换页时会自动重复） ------------------
+  学院    & 马院（人） & 文艺（人） & 信息（人） & 计科（人） \\
+  % ------------------ 真正的表格数据区（自动跨页断行） ------------------
+  总人数  & 4627 & 5675 & 5633 & 7932 \\ 
+  2023 级 & 347  & 683  & 464  & 742  \\ 
+  2022 级 & 274  & 894  & 853  & 356  \\ 
+  % <-- 如果在这里发生跨页，LaTeX 会自动在当前页补上底线，并在下一页顶部打出“续表 2-1 西南科技大学人数统计[1]” -->
+  2021 级 & 367  & 842  & 856  & 874  \\ 
+  2020 级 & 674  & 853  & 863  & 234  \\ 
+  2019 级 & 946  & 743  & 742  & 583  \\
+\end{longtblr}
+
+\begin{longtblr}[
+  caption = {2023~年秋招人数统计},
+  label = {tab:recruitment_stat},
+]{
+  colspec = {c *{3}{X[c]}},
+  width = \linewidth,
+  rowhead = 1,
+}
+ \diagbox[width=4.5cm, height=1.4cm]{招聘人数}{公司名称}
+  & 公司 1（人） & 公司 2（人） & 公司 3（人） \\
+  % ------------------ 真正的表格数据区 ------------------
+  马院人数 & 67           & 84           & 67           \\ 
+  文艺人数 & 64           & 69           & 82           \\
+\end{longtblr}
+
+\begin{longtblr}[
+  caption = {2023~年公司人数统计},
+  label = {tab:company_stat},
+]{
+  colspec = {c *{3}{X[c]}},
+}
+           & 公司1（人）& 公司2（人）& 公司3（人） \\
+  % ------------------ 真正的表格数据区 ------------------
+  信息部门 &  67 & 84 & 67 \\
+  管理部门 &  67 & 84 & 67 \\
+  行政部门 &  67 & 84 & 67 \\
+  技术部门 &  64 & 69 & 82 \\
+\end{longtblr}
+}
+
+\section{公式规范}
+
+\begin{enumerate}
+  \item 公式应另起一行，居中编排，较长的公式尽可能在等号后换行，
+    或者在“+”、“-”等符号后换行。
+    公式中分数线的横线，长短要分清，主要的横线应与等号取平。
+  \item \textbf{公式下面的“式中”两字左起顶格编排，后接符号及其解释；
+    解释顺序为先左后右，先上后下；解释与解释之间用“；”隔开。}
+    \textcolor{red}{举例说明（实际应用时字体用黑色）：}
+    {
+    \color{red}
+    \begin{equation}
+      A = a + b + c + d + \cdots\cdots\cdots + g
+    \end{equation}
+      式中 $A$ 表示 $xxxx$；$a$ 表示 $xxxxxx$；$b$ 表示 $xxxxxxx\cdots\cdots\cdots$；
+      $g$ 表示 $xxxxx$
+    \begin{equation}
+      \begin{split}
+        \mathcolor{black}{A = & \ a + b + c + d + \cdots\cdots\cdots} + \\
+        \mathcolor{black}{& \ h + l + t + u - \cdots\cdots\cdots - w}
+      \end{split}
+    \end{equation}
+   式中 $A$ 表示 $xxxx$；
+    $a$ 表示 $xxxxxx$；$b$ 表示 $xxxxxxx\cdots\cdots\cdots$；
+    $w$ 表示 $xxxxx$
+    }
+\end{enumerate}
+
+\section{参考文献标注规范}
+
+\begin{enumerate}
+  \item 参考文献采用实引方式，在文中用上角标（序号[1]、[2]…）标注，序号按在文中出现的先后顺序连续编排。
+  \item 文中同一处引用多个文献时，将各个文献的序号在方括号内全部列出，各序号间用“，”隔开；如为连续序号，可用“-”标注起讫序号。
+
+    \textcolor{red}{如：张三\cite{WuXujiang2023}指出…李四\cite{YuHongPeng2021,LiuShiSun2017}
+    认为…形成了多种数学模型\cite{ChenWuYin2022,WangQingyi2023,WangLuHe2023}…。}
+  \item 一篇文献如只被引用一次，页码在文末的参考文献表中著录。一篇文献如被多次引用，页码标注在文中上角标“[ ]”之后（如：[1]32、[1]256…）。
+
+    举例
+
+    \textcolor{red}{
+      如：西南科技大学简称“西南科大”，坐落于四川省绵阳市\pagescite{WuXujiang2023}{32}，
+      由教育部、国家国防科技工业局和四川省人民政府共建\pagescite{WuXujiang2023}{47}，
+      是西部重点建设十四所高校之一\pagescite{WuXujiang2023}{78}。}
+    
+    %内联页码文献参考示例：\inlinepagescite{WuXujiang2023}{90}。
+
+  \item {
+      注释使用上角标（序号\ding{192}、\ding{193}…）标注\footnote{脚注示例}，
+      序号按页编\footnote{按页编序号}排，
+      \textcolor{red}{如果由于 word 版本问题出现连续编号，
+      请选中每页第一个编号，点击鼠标右键，选择“重新始于\ding{192}编排”。举例如下：}
+    }
+
+    \begin{figure}[htbp]
+      \centering
+      \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{footnote-a}
+        \caption{}
+        \label{fig:footnote-example-a}
+      \end{subfigure}
+      %\hfill % 利用弹性间距把左右两个子图分别推向两边
+      \hspace{1em}
+      \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{footnote-b}
+        \caption{}
+        \label{fig:footnote-example-b}
+      \end{subfigure}
+      \caption{脚注注释示例}
+      \label{fig:footnote-example}
+    \end{figure}
+    %\textbf{注意：}图 \ref{fig:footnote-example} 中页码不同，脚注编号均从 \ding{192} 开始。
+\end{enumerate}

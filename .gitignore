@@ -1,9 +1,8 @@
-*.log
 *.aux
-*.out
 *.bbl
+*.bbl-SAVE-ERROR
+*.bcf
 *.blg
-*.toc
 *.fdb_latexmk
 *.fls
 *.glo
@@ -12,4 +11,8 @@
 *.idx
 *.ilg
 *.ind
+*.log
+*.out
+*.run.xml
+*.toc
 *.xdv
