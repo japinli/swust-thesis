@@ -58,10 +58,28 @@
     \PassOptionsToClass{oneside}{ctexbook}
 \fi
 \LoadClass[a4paper,UTF8,zihao=-4,punct=quanjiao,space=auto]{ctexbook}
-\setmainfont{Times New Roman}
+
+% ================ 字体设置 ================
+% 导入字体
+\newCJKfontfamily{\fzcu}[Path=fonts/]{方正粗宋简体.TTF}
+\newCJKfontfamily{\hwxk}[Path=fonts/]{华文行楷.TTF}
+
+% 将内置的宋体和黑体重新映射到项目中的 fonts/ 下的 SIMSUN.TTC SIMHEI.TTF
+\setCJKfamilyfont{songti}[Path=fonts/, UprightFeatures={FontIndex=0}]{SIMSUN.TTC}
+\setCJKfamilyfont{heiti}[Path=fonts/]{SIMHEI.TTF}
+
+\setmainfont{TIMES}[
+  Path           = fonts/,  % 指定字体文件夹路径
+  Extension      = .TTF,    % 统一文件扩展名
+  UprightFont    = *,       % * 代表基础名称 TIMES，即 TIMES.TTF
+  BoldFont       = TIMESBD, % 粗体文件
+  ItalicFont     = TIMESI,  % 斜体文件
+  BoldItalicFont = TIMESBI, % 粗斜体文件
+]
 \setsansfont{Arial}
 \setmonofont{Courier New}
-\newCJKfontfamily{\hwxk}{STXingkai}
+% ==========================================
+
 \RequirePackage{hyperref}
 \hypersetup{
   CJKbookmarks=true,
@@ -438,6 +456,37 @@
 \else
   \newcommand{\swust@maketitle}{
     \begin{titlepage}
+      \vspace*{1cm}
+      \begin{minipage}{\linewidth}
+        \includegraphics{thesis-cover-logo}
+      \end{minipage} \\ % 强制换行
+
+      \centering
+      \vspace*{1.2\baselineskip}
+      {\fzcu\fontsize{32}{38}\selectfont \color{DarkGreen}学术型博士研究生学位论文} \\ % 强制换行
+      \vspace*{0.5\baselineskip}
+      {\heiti\fontsize{15}{15}\selectfont（理学博士）} \\ % 强制换行
+      \vspace*{\baselineskip}
+      \heiti\zihao{2}{\underline{\swust@zhtitle}} \\ % 强制换行
+
+      \vspace{3cm}
+      \zihao{-3}
+      \begin{tabular}{cc}
+        \makebox[8em][s]{作者姓名}       & \swust@underline[16em]{\swust@zhauthor}  \\
+        \makebox[8em][s]{学号}           & \swust@underline[16em]{\swust@stuid}      \\
+        \makebox[8em][s]{导师}           & \swust@underline[16em]{\swust@zhadvisor}    \\
+        \makebox[8em][s]{学科}           & \swust@underline[16em]{\swust@zhmajor}    \\
+        \makebox[8em][s]{答辩委员会成员} & \swust@underline[16em]{\swust@zhauthor}   \\
+        \makebox[8em][s]{}               & \swust@underline[16em]{}   \\
+        \makebox[8em][s]{评阅人}         & \swust@underline[16em]{\swust@zhadvisor}  \\
+      \end{tabular}\\
+
+      \vspace{3cm}
+      \swust@zhdate
+
+    \end{titlepage}
+    \clearpage
+    \begin{titlepage}
       \vspace*{2cm}
       \centering
       \zihao{-2}\textbf{\swust@zh@thesis@name}
@@ -560,16 +609,20 @@
 \RequirePackage{ccaption}
 \RequirePackage{subcaption}
 \DeclareCaptionFont{mycaptionfont}{\zihao{5}\songti}
+\captionsetup[figure]{
+  skip = 0.2\baselineskip,   %  标题与上方图片主体的距离
+}
+\captionsetup[subfigure]{
+  aboveskip = 0.1\baselineskip,
+  belowskip = 0.1\baselineskip,
+}
+
 \captionsetup{
   textfont      = mycaptionfont, % 将标题文本设置为 'mycaptionfont' 的样式
   labelfont     = mycaptionfont, % 将“图/表”标签也设置为相同样式（可选）
   justification = centering,     % 居中
   labelsep      = space,         % 分隔符
   skip          = 0.5\baselineskip,
-}
-
-\captionsetup[figure]{
-  skip = 0.2\baselineskip,   %  标题与上方图片主体的距离
 }
 
 \RequirePackage{amsmath}
@@ -622,7 +675,7 @@
 
 \RequirePackage{tabularray}
 \RequirePackage{diagbox} % 绘制带斜线的表头
-\RequirePackage{xcolor}  % 如果你的标题需要颜色，保持加载
+\RequirePackage[svgnames]{xcolor}  % 如果你的标题需要颜色，保持加载
 
 % 全局锁定主标题的所有文本属性（包括标签和文字）为五号字
 \DeclareTblrTemplate{caption-tag}{default}{表~\thetable~}
